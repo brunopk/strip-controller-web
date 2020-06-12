@@ -2,8 +2,7 @@ import {Switch, Route} from 'react-router-dom'
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './App.css';
-import './Login'
-import Login from "./Login";
+import Login from "./components/login";
 
 function App() {
 
