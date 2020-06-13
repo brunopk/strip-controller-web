@@ -1,18 +1,19 @@
-import {Switch, Route} from 'react-router-dom'
 import React from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css'
+import {Switch, Route, Redirect} from 'react-router-dom'
+import "bootstrap/dist/css/bootstrap.min.css"
+import "bootstrap/dist/js/bootstrap.min"
 import './App.css';
 import Login from "./components/login";
+import Dashboard from "./components/dashboard/Dashboard";
+import PrivateRoute from './components/private-route'
 
 function App() {
-
-    document.body.classList.add('text-center');
 
     return (
         <div>
             <Switch>
                 <Route path="/login">
-                    <Login />
+                    <Login/>
                 </Route>
 
                 {/* Note how these two routes are ordered. The more specific
@@ -31,8 +32,11 @@ function App() {
             Important: A route with path="/" will *always* match
             the URL because all URLs begin with a /. So that's
             why we put this one last of all */}
+                <PrivateRoute path="/dashboard">
+                    <Dashboard/>
+                </PrivateRoute>
                 <Route path="/">
-                    <Login />
+                    <Redirect to={{pathname: "/dashboard"}}/>
                 </Route>
             </Switch>
         </div>
