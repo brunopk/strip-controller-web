@@ -32,7 +32,10 @@ function App() {
             Important: A route with path="/" will *always* match
             the URL because all URLs begin with a /. So that's
             why we put this one last of all */}
-                <PrivateRoute path="/dashboard">
+                <Route path="/dash">
+                <Dashboard/>
+            </Route>
+            <PrivateRoute path="/dashboard">
                     <Dashboard/>
                 </PrivateRoute>
                 <Route path="/">
