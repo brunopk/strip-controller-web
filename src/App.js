@@ -10,7 +10,7 @@ import PrivateRoute from './components/private-route'
 function App() {
 
     return (
-        <div>
+        <>
             <Switch>
                 <Route path="/login">
                     <Login/>
@@ -42,7 +42,7 @@ function App() {
                     <Redirect to={{pathname: "/dashboard"}}/>
                 </Route>
             </Switch>
-        </div>
+        </>
   );
 }
 
