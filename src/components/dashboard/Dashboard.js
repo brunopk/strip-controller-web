@@ -1,10 +1,10 @@
 import React from "react";
-import 'rc-color-picker/assets/index.css';
-import './Dashboard.css';
+import "rc-color-picker/assets/index.css";
+import "./Dashboard.css";
 import * as Icon from 'react-feather';
-import Panel from "./panel"
 import Logo from "../../components/logo";
 import {setBodyClass, setRootClass} from "../../utils/css"
+import {Panel as PColors} from "../../components/p-colors"
 
 
 function Dashboard() {
@@ -51,7 +51,7 @@ function Dashboard() {
                     </nav>
 
                     <main role="main" className="col-md-9 ml-sm-auto col-lg-10 px-md-4 h-100">
-                        <Panel.Colors/>
+                    <PColors/>
                     </main>
                 </div>
             </div>

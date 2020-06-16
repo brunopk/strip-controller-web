@@ -1,6 +1,5 @@
 import React from "react";
 import ColorPicker from "rc-color-picker";
-import "../Panel.css"
 import "./Panel.css"
 
 function Color({rgbValue}) {

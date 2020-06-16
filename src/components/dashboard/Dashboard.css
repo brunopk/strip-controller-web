@@ -18,6 +18,10 @@
         -ms-flex-wrap: nowrap!important;
         flex-wrap: nowrap!important;
     }
+
+    .panel {
+        padding: 1.5rem 0 1.5rem 0;
+    }
 }
 
 .feather {
