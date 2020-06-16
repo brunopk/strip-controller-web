@@ -13,8 +13,6 @@
     padding: inherit;
 }
 
-.root-dashboard {}
-
 @media (min-width: 768px){
     .flex-md-nowrap {
         -ms-flex-wrap: nowrap!important;
@@ -109,6 +107,10 @@
     padding: .75rem 1rem;
     border-width: 0;
     border-radius: 0;
+}
+
+.navbar-nav {
+    flex-direction: row;
 }
 
 .form-control-dark {
