@@ -1,67 +1,78 @@
 import React, {useState} from "react";
+import {replace} from "../../../utils/array"
 import ColorPicker from "rc-color-picker";
 import "./Panel.css"
 import * as Icon from 'react-feather';
-import * as $ from 'jquery'
 
-function Color({rgbValue}) {
+function Color({hex, onChangeHex, onSelect, editable}) {
 
-    // TODO its not necessary to use hooks for mode, just onclik for icons
-    const Mode = {
-      EDIT: 1,
-      PLAY: 2,
-      DELETE: 3
+    // TODO implement delete
+
+    const handleCloseColorPicker = (pepe) => {
+      onChangeHex(pepe.color)
     }
-    const [mode, setMode] = useState(Mode.PLAY);
-    const handleChangeMode = (mode) => () => setMode(mode)
-    const handleClick = (_mode) => () => {
-      // TODO handle click for other modes
-      switch(_mode){
-        case Mode.EDIT: alert('EDIT'); break;
-        case Mode.DELETE: alert('DELETE'); break;
-        default: alert('PLAY'); break;
-      }
+
+    let first = <div class="col-4 col-mode" onClick={() => onSelect()} />
+    let middle = <div class="col-4 col-mode" onClick={() => onSelect()}/> 
+    let last = <div class="col-4 col-mode" onClick={() => onSelect()} />
+
+    if(editable){
+      first = 
+        <div class="col-4 col-mode">
+          <ColorPicker enableAlpha={false} animation="slide-up" onClose={handleCloseColorPicker}>
+            <Icon.Edit className="react-custom-trigger" color="white" />
+          </ColorPicker>
+        </div>
+      middle = <div class="col-4 col-mode"><Icon.Play color="white" onClick={() => onSelect()}/></div>
+      last = 
+        <div class="col-4 col-mode">
+          <Icon.X color="white" />
+        </div>
     }
+    
     
     return (
       <div className="col-sm-12 col-md-2 col-lg-2">
-        <div class="container-fluid color-container" onClick={handleClick(mode)} >
-          <div class="row align-items-center" style={{backgroundColor: `rgb(${rgbValue[0]}, ${rgbValue[1]}, ${rgbValue[2]})`}}>
-            <div class="col-4 col-mode" onMouseEnter={handleChangeMode(Mode.EDIT)}>
-              <ColorPicker enableAlpha={false} animation="slide-up">
-                <Icon.Edit className="react-custom-trigger" color="white" />
-              </ColorPicker>
-            </div>
-            <div class="col-4 col-mode" onMouseEnter={handleChangeMode(Mode.PLAY)}>
-              <Icon.Play color="white" />
-            </div>
-            <div class="col-4 col-mode" onMouseEnter={handleChangeMode(Mode.DELETE)}>
-              <Icon.X color="white" />
-            </div>
+        <div class="container-fluid color-container" >
+          <div class="row align-items-center" style={{backgroundColor: hex}}> 
+            {first}
+            {middle}
+            {last}
           </div>
         </div>
       </div>
     );
 }
 
+function Panel({values, onChose, editable }) {
 
-function Panel() {
+    const [colorList, setColorList] = useState(values);
+    let newColor = (l) => () => {let _l = l.slice(); _l.push("#000000"); setColorList(_l)}
+    let editColor = (l, oldHex) => (newHex) => {let _l = replace(l, oldHex, newHex);console.log(_l);  setColorList(_l) }
+    let addColorColumn = <></>
 
-    let colors = [[123, 123, 123], [45, 0, 54], [124, 43, 34], [123, 123, 123], [45, 0, 54], [124, 43, 34], [123, 123, 123], [45, 0, 54], [124, 43, 34], [123, 123, 123], [45, 0, 54]];
+    if(editable)
+      addColorColumn = 
+        <div className="col-sm-12 col-md-2 col-lg-2 col-custom" onClick={newColor(colorList)}>
+          <div class="container-fluid color-container add-color-container">
+            <div class="row align-items-center">
+              <div class="col-4 offset-4 add-color-col">
+                <Icon.Plus color="black" />
+              </div>
+            </div>
+          </div>
+        </div>
 
     return (
       <div className="container-fluid panel">
           <div className="row">
-              {colors.map(rgbValue => <Color rgbValue={rgbValue}/>)}
-              <div className="col-sm-12 col-md-2 col-lg-2 col-custom">
-                <div class="container-fluid color-container add-color-container">
-                  <div class="row align-items-center">
-                    <div class="col-4 offset-4 add-color-col">
-                      <Icon.Plus color="black" />
-                    </div>
-                  </div>
-                </div>
-              </div>
+              {colorList.map(v => <Color 
+                hex={v} 
+                editable={typeof(editable) !== 'boolean' ? false : editable}
+                onChangeHex={editColor(colorList, v)} 
+                onSelect={() => onChose(v)} />)
+              }
+              {addColorColumn}
           </div>
       </div>
     );

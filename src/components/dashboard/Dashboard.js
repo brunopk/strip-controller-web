@@ -51,7 +51,11 @@ function Dashboard() {
                     </nav>
 
                     <main role="main" className="col-md-9 ml-sm-auto col-lg-10 px-md-4 h-100">
-                    <PColors/>
+                    {/* 
+                      TODO color list should come from server 
+                      TODO implement onChose
+                    */}
+                    <PColors values={[]}  editable={true} onChose={(hex) => {alert(hex)}}/>
                     </main>
                 </div>
             </div>
