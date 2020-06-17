@@ -1,0 +1,35 @@
+.panel .row .color-container {
+    margin-bottom: 1rem;
+    height: 9rem;
+    width: 100%;
+    border-radius: .25rem;
+    cursor: pointer;
+}
+
+.panel .row .color-container:hover {
+  box-shadow: 0 4px 30px 0 rgba(0,0,0,.50), 0 7px 10px -5px rgba(0,0,0,.50);
+}
+
+.panel .row .color-container .row{
+  height: 100%;
+  padding: 0;
+}
+
+.panel .row .color-container .row .col-mode{
+  padding: 2rem;
+}
+
+.react-custom-trigger {
+  background-color: inherit!important;
+}
+
+/************************************************************************************/
+
+.panel .row .add-color-container {
+  border: 1px solid black;
+  border-radius: .25rem;
+}
+
+.panel .row .add-color-container .add-color-col{
+  padding: 2rem;
+}

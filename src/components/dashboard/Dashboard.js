@@ -4,7 +4,7 @@ import "./Dashboard.css";
 import * as Icon from 'react-feather';
 import Logo from "../../components/logo";
 import {setBodyClass, setRootClass} from "../../utils/css"
-import {Panel as PColors} from "../../components/p-colors"
+import {Panel as PColors} from "../panels/colors"
 
 
 function Dashboard() {
