@@ -54,10 +54,10 @@ function Panel({values, onChose, editable }) {
     if(editable)
       addColorColumn = 
         <div className="col-sm-12 col-md-2 col-lg-2 col-custom" onClick={newColor(colorList)}>
-          <div className="container-fluid color-container add-color-container">
+          <div className="container-fluid color-container add-color-container bg-primary">
             <div className="row align-items-center">
               <div className="col-4 offset-4 text-center">
-                <Icon.Plus color="black" />
+                <Icon.Plus color="white" />
               </div>
             </div>
           </div>
