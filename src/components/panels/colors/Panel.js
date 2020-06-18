@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {replace} from "../../../utils/array"
+import {replaceAt} from "../../../utils/array"
 import ColorPicker from "rc-color-picker";
 import "./Panel.css"
 import * as Icon from 'react-feather';
@@ -48,7 +48,7 @@ function Panel({values, onChose, editable }) {
 
     const [colorList, setColorList] = useState(values);
     let newColor = (l) => () => {let _l = l.slice(); _l.push("#000000"); setColorList(_l)}
-    let editColor = (l, oldHex) => (newHex) => {let _l = replace(l, oldHex, newHex);console.log(_l);  setColorList(_l) }
+    let editColor = (l, index) => (newHex) => {let _l = replaceAt(l, index, newHex);console.log(_l);  setColorList(_l) }
     let addColorColumn = <></>
 
     if(editable)
@@ -66,10 +66,10 @@ function Panel({values, onChose, editable }) {
     return (
       <div className="container-fluid panel">
           <div className="row">
-              {colorList.map(v => <Color 
+              {colorList.map((v, k) => <Color 
                 hex={v} 
                 editable={typeof(editable) !== 'boolean' ? false : editable}
-                onChangeHex={editColor(colorList, v)} 
+                onChangeHex={editColor(colorList, k)} 
                 onSelect={() => onChose(v)} />)
               }
               {addColorColumn}

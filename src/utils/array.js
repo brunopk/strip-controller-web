@@ -13,5 +13,19 @@ function replace(array, value, newValue){
   return _array
 }
 
+/**
+ * Replace an entry of the array at specific position
+ * @param {Array} array source array
+ * @param {Number} index position to replace
+ * @param {*} newValue new value
+ * @returns Returns a new copy of the array with the replacement
+ */
+function replaceAt(array, index, newValue){
+  let _array = array.slice()
+  if(index !== -1)
+    _array[index] = newValue
+  return _array
+}
 
-export {replace}
+
+export {replace, replaceAt}
