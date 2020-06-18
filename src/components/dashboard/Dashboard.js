@@ -5,9 +5,10 @@ import * as Icon from 'react-feather';
 import Logo from "../../components/logo";
 import {setBodyClass, setRootClass} from "../../utils/css"
 import {Panel as PColors} from "../panels/colors"
+import {Panel as PEffects} from "../panels/effects"
 
 
-function Dashboard() {
+function Dashboard({CurrentPanel}) {
 
     setRootClass("root-dashboard");
     setBodyClass("body-dashboard");
@@ -25,12 +26,12 @@ function Dashboard() {
                     <ul className="navbar-nav px-3">
                         <li className="nav-item text-nowrap">
                             <a className="nav-link" href="/logut">
-                                <button class="btn btn-success">< Icon.PauseCircle /></button>
+                                <button className="btn btn-success">< Icon.PauseCircle /></button>
                             </a>
                         </li>
                         <li className="nav-item text-nowrap">
                             <a className="nav-link" href="/logut">
-                                <button class="btn btn-danger">< Icon.Power /></button>
+                                <button className="btn btn-danger">< Icon.Power /></button>
                             </a>
                         </li>
                     </ul>
@@ -41,9 +42,14 @@ function Dashboard() {
                         <div className="sidebar-sticky pt-3">
                             <ul className="nav flex-column">
                                 <li className="nav-item">
-                                    <a className="nav-link active" href="/asdasd">
-                                        <Icon.Grid className={"feather"}/>
-                                       Colors <span className="sr-only">(current)</span>
+                                  {console.log(CurrentPanel)}
+                                    <a className={"nav-link " + (CurrentPanel === PColors ? "active" : "")} href="/dash">
+                                        <Icon.Grid className="feather"/>Colors <span className="sr-only"></span>
+                                    </a>
+                                </li>
+                                <li className="nav-item">
+                                    <a className={"nav-link " + (CurrentPanel === PEffects ? "active" : "")} href="/eff">
+                                        <Icon.Star className="feather"/>Effects <span className="sr-only"></span>
                                     </a>
                                 </li>
                             </ul>
@@ -55,7 +61,7 @@ function Dashboard() {
                       TODO color list should come from server 
                       TODO implement onChose
                     */}
-                    <PColors values={[]}  editable={true} onChose={(hex) => {alert(hex)}}/>
+                    <CurrentPanel values={[]}  editable={true} onChose={(hex) => {alert(hex)}}/>
                     </main>
                 </div>
             </div>

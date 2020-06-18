@@ -1,11 +1,13 @@
-import React from 'react';
-import {Switch, Route, Redirect} from 'react-router-dom'
+import React from "react";
+import {Switch, Route, Redirect} from "react-router-dom"
+import {Panel as PColors} from "./components/panels/colors"
+import {Panel as PEffects } from "./components/panels/effects"
 import "bootstrap/dist/css/bootstrap.min.css"
 import "bootstrap/dist/js/bootstrap.min"
-import './App.css';
+import "./App.css";
 import Login from "./components/login";
 import Dashboard from "./components/dashboard/Dashboard";
-import PrivateRoute from './components/private-route'
+import PrivateRoute from "./components/private-route"
 
 function App() {
 
@@ -32,11 +34,21 @@ function App() {
             Important: A route with path="/" will *always* match
             the URL because all URLs begin with a /. So that's
             why we put this one last of all */}
+                
+                {/* for test (remove this) */}
                 <Route path="/dash">
-                <Dashboard/>
-            </Route>
-            <PrivateRoute path="/dashboard">
-                    <Dashboard/>
+                  <Dashboard CurrentPanel={PColors}/>
+                </Route>
+                <Route path="/eff">
+                  <Dashboard CurrentPanel={PEffects}/>
+                </Route>
+                {/* */}
+
+                <PrivateRoute path="/dashboard">
+                    <Dashboard CurrentPanel={PColors}/>
+                </PrivateRoute>
+                <PrivateRoute path="/dashboard">
+                    <Dashboard CurrentPanel={PEffects}/>
                 </PrivateRoute>
                 <Route path="/">
                     <Redirect to={{pathname: "/dashboard"}}/>

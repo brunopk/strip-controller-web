@@ -1,0 +1,26 @@
+.panel .row .effect-container {
+    margin-bottom: 1rem;
+    height: 9rem;
+    width: 100%;
+    border: 1px solid white;
+    border-radius: .25rem;
+    cursor: pointer;
+    color: white;
+}
+
+.panel .row .effect-container:hover {
+  box-shadow: 0 4px 30px 0 rgba(0,0,0,.50), 0 7px 10px -5px rgba(0,0,0,.50);
+}
+
+.panel .row .effect-container .row {
+  padding: 0;
+}
+
+.panel .row .effect-container .row-1 {
+  height: 80%;
+}
+
+.panel .row .effect-container .row-2 {
+  height: 20%;
+  border-top: 1px solid white;
+}
