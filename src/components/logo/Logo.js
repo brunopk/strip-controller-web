@@ -1,10 +1,8 @@
 import React from "react";
 
-function Logo({className}) {
-    console.log(className);
-
+function Logo() {
     return (
-        <div className={className}>
+        <div className="logo">
             <strong><span className="text-danger"> Strip </span></strong>
             <strong><span className="text-success"> Controller </span></strong>
             <strong><span className="text-primary"> Web </span></strong>
