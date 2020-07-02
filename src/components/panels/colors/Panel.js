@@ -12,20 +12,20 @@ function Color({hex, onChangeHex, onSelect, editable}) {
       onChangeHex(pepe.color)
     }
 
-    let first = <div className="col-4 col-mode" onClick={() => onSelect()} />
-    let middle = <div className="col-4 col-mode" onClick={() => onSelect()}/> 
-    let last = <div className="col-4 col-mode" onClick={() => onSelect()} />
+    let first = <div className="col-4" onClick={() => onSelect()} />
+    let middle = <div className="col-4" onClick={() => onSelect()}/> 
+    let last = <div className="col-4" onClick={() => onSelect()} />
 
     if(editable){
       first = 
-        <div className="col-4 col-mode">
+        <div className="col-4">
           <ColorPicker enableAlpha={false} animation="slide-up" onClose={handleCloseColorPicker}>
             <Icon.Edit className="react-custom-trigger" color="white" />
           </ColorPicker>
         </div>
-      middle = <div className="col-4 col-mode"><Icon.Play color="white" onClick={() => onSelect()}/></div>
+      middle = <div className="col-4"><Icon.Play color="white" onClick={() => onSelect()}/></div>
       last = 
-        <div className="col-4 col-mode">
+        <div className="col-4">
           <Icon.X color="white" />
         </div>
     }
@@ -48,12 +48,12 @@ function Panel({values, onChose, editable }) {
 
     const [colorList, setColorList] = useState(values);
     let newColor = (l) => () => {let _l = l.slice(); _l.push("#000000"); setColorList(_l)}
-    let editColor = (l, index) => (newHex) => {let _l = replaceAt(l, index, newHex);console.log(_l);  setColorList(_l) }
+    let editColor = (l, index) => (newHex) => {let _l = replaceAt(l, index, newHex);console.log(_l); setColorList(_l) }
     let addColorColumn = <></>
 
     if(editable)
       addColorColumn = 
-        <div className="col-sm-12 col-md-2 col-lg-2 col-custom" onClick={newColor(colorList)}>
+        <div className="col-sm-12 col-md-2 col-lg-2" onClick={newColor(colorList)}>
           <div className="container-fluid color-container add-color-container bg-primary">
             <div className="row align-items-center">
               <div className="col-4 offset-4 text-center">
