@@ -14,7 +14,7 @@ function Panel({values, onChose, editable }) {
               <div className="container-fluid effect-container bg-primary">
                 <div className="row row-1">
                   <div className="col-4 offset-4 text-center align-self-center">
-                    <Icon.Star height={50} width={50} color="white" />
+                    <Icon.Star height={30} width={30} color="white" />
                   </div>
                 </div>
                 <div className="row row-2 text-center">
