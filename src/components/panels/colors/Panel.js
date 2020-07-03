@@ -30,7 +30,7 @@ function Color({hex, onChangeHex, onSelect, editable}) {
         </div>
     }
     
-    
+
     return (
       <div className="col-sm-12 col-md-2 col-lg-2">
         <div className="container-fluid color-container" >
@@ -44,12 +44,15 @@ function Color({hex, onChangeHex, onSelect, editable}) {
     );
 }
 
-function Panel({values, onChose, editable }) {
+function Panel({values = [], onChose, editable = false}) {
 
     const [colorList, setColorList] = useState(values);
     let newColor = (l) => () => {let _l = l.slice(); _l.push("#000000"); setColorList(_l)}
     let editColor = (l, index) => (newHex) => {let _l = replaceAt(l, index, newHex);console.log(_l); setColorList(_l) }
     let addColorColumn = <></>
+
+    if(!editable && values.length === 0)
+      throw new Error("Provide hex values for the property 'values' or set editable={true}");
 
     if(editable)
       addColorColumn = 
@@ -68,7 +71,7 @@ function Panel({values, onChose, editable }) {
           <div className="row">
               {colorList.map((v, k) => <Color 
                 hex={v} 
-                editable={typeof(editable) !== 'boolean' ? false : editable}
+                editable={editable}
                 onChangeHex={editColor(colorList, k)} 
                 onSelect={() => onChose(v)} />)
               }
