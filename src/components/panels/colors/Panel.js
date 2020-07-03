@@ -7,6 +7,7 @@ import * as Icon from 'react-feather';
 function Color({hex, onChangeHex, onSelect, editable}) {
 
     // TODO implement delete
+    // TODO Improve CSS for mobile
 
     const handleCloseColorPicker = (pepe) => {
       onChangeHex(pepe.color)
