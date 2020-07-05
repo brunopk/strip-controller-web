@@ -6,6 +6,7 @@ import Logo from "../../components/logo";
 import {setBodyClass, setRootClass} from "../../utils/css"
 import {Panel as PColors} from "../panels/colors"
 import {Panel as PEffects} from "../panels/effects"
+import {Panel as PCustomizable} from "../panels/customizable"
 
 
 function Dashboard({CurrentPanel}) {
@@ -42,7 +43,6 @@ function Dashboard({CurrentPanel}) {
                         <div className="sidebar-sticky pt-3">
                             <ul className="nav flex-column">
                                 <li className="nav-item">
-                                  {console.log(CurrentPanel)}
                                     <a className={"nav-link " + (CurrentPanel === PColors ? "active" : "")} href="/dash">
                                         <Icon.Grid className="feather"/>Colors <span className="sr-only"></span>
                                     </a>
@@ -50,6 +50,11 @@ function Dashboard({CurrentPanel}) {
                                 <li className="nav-item">
                                     <a className={"nav-link " + (CurrentPanel === PEffects ? "active" : "")} href="/eff">
                                         <Icon.Star className="feather"/>Effects <span className="sr-only"></span>
+                                    </a>
+                                </li>
+                                <li className="nav-item">
+                                    <a className={"nav-link " + (CurrentPanel === PCustomizable ? "active" : "")} href="/customizable">
+                                        <Icon.Sliders className="feather"/>Customizable <span className="sr-only"></span>
                                     </a>
                                 </li>
                             </ul>

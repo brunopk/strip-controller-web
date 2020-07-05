@@ -2,6 +2,7 @@ import React from "react";
 import {Switch, Route, Redirect} from "react-router-dom"
 import {Panel as PColors} from "./components/panels/colors"
 import {Panel as PEffects } from "./components/panels/effects"
+import {Panel as PCustomizable } from "./components/panels/customizable"
 import "bootstrap/dist/css/bootstrap.min.css"
 import "bootstrap/dist/js/bootstrap.min"
 import "./App.css";
@@ -42,6 +43,9 @@ function App() {
                 <Route path="/eff">
                   <Dashboard CurrentPanel={PEffects}/>
                 </Route>
+                <Route path="/customizable">
+                  <Dashboard CurrentPanel={PCustomizable}/>
+                </Route>
                 {/* */}
 
                 <PrivateRoute path="/dashboard">
@@ -49,6 +53,9 @@ function App() {
                 </PrivateRoute>
                 <PrivateRoute path="/dashboard">
                     <Dashboard CurrentPanel={PEffects}/>
+                </PrivateRoute>
+                <PrivateRoute path="/customizable">
+                    <Dashboard CurrentPanel={PCustomizable}/>
                 </PrivateRoute>
                 <Route path="/">
                     <Redirect to={{pathname: "/dashboard"}}/>
