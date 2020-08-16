@@ -1,19 +1,21 @@
 import React from "react";
+import Login from "./components/login";
+import Dashboard from "./components/dashboard/Dashboard";
+import PrivateRoute from "./components/private-route"
 import {Switch, Route, Redirect} from "react-router-dom"
 import {Panel as PColors} from "./components/panels/colors"
 import {Panel as PEffects } from "./components/panels/effects"
 import {Panel as PCustomizable } from "./components/panels/customizable"
+import {UserContextProvider} from "./context/UserContext"
 import "bootstrap/dist/css/bootstrap.min.css"
 import "bootstrap/dist/js/bootstrap.min"
 import "./App.css";
-import Login from "./components/login";
-import Dashboard from "./components/dashboard/Dashboard";
-import PrivateRoute from "./components/private-route"
+
 
 function App() {
 
     return (
-        <>
+        <UserContextProvider>
             <Switch>
                 <Route path="/login">
                     <Login/>
@@ -35,23 +37,11 @@ function App() {
             Important: A route with path="/" will *always* match
             the URL because all URLs begin with a /. So that's
             why we put this one last of all */}
-                
-                {/* for test (remove this) */}
-                <Route path="/dash">
-                  <Dashboard CurrentPanel={PColors}/>
-                </Route>
-                <Route path="/eff">
-                  <Dashboard CurrentPanel={PEffects}/>
-                </Route>
-                <Route path="/customizable">
-                  <Dashboard CurrentPanel={PCustomizable}/>
-                </Route>
-                {/* */}
 
                 <PrivateRoute path="/dashboard">
                     <Dashboard CurrentPanel={PColors}/>
                 </PrivateRoute>
-                <PrivateRoute path="/dashboard">
+                <PrivateRoute path="/effects">
                     <Dashboard CurrentPanel={PEffects}/>
                 </PrivateRoute>
                 <PrivateRoute path="/customizable">
@@ -61,7 +51,7 @@ function App() {
                     <Redirect to={{pathname: "/dashboard"}}/>
                 </Route>
             </Switch>
-        </>
+        </UserContextProvider>
   );
 }
 

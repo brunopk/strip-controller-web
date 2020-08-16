@@ -1,8 +1,9 @@
-import React from "react";
-import {useHistory, useLocation} from 'react-router-dom'
+import React, {useContext} from "react";
+import {useHistory, useLocation} from "react-router-dom"
+import {UserContext} from "../../context/UserContext";
+import {getToken} from "../../utils/authentication";
 import {setBodyClass, setRootClass} from "../../utils/css"
 import Logo from "../logo";
-import {fakeAuth} from "../../utils/authentication";
 import './Login.css'
 
 function Login() {
@@ -12,15 +13,24 @@ function Login() {
 
     let history = useHistory();
     let location = useLocation();
+    let {setToken} = useContext(UserContext);
 
     let { from } = location.state || { from: { pathname: "/" } };
-    let login = () => {
-        fakeAuth.authenticate(() => {
-            fakeAuth.isAuthenticated = true;
-            alert('Welcome');
+    let login = async () => {
+        try {
+          const resp = await getToken();
+          if (resp.ok) {
+            const body = await resp.json()
+            setToken(body.access_token);
             // Redirect
             history.replace(from);
-        });
+          } else {
+            // TODO
+          }
+        } catch (error) {
+          // TODO
+          console.log(error);
+        }
     };
 
     return (
