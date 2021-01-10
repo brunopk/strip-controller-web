@@ -35,8 +35,20 @@
 }
 
 /*
- * Sidebar
+ * Sidebar (and main menu)
  */
+
+ @media (max-width: 768px){
+    #main-menu-lg {
+       display: none!important;
+    }
+}
+
+ @media (min-width: 768px){
+    #main-menu-sm {
+       display: none!important;
+    }
+}
 
 .sidebar {
     position: fixed;
