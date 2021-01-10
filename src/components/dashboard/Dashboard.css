@@ -146,10 +146,6 @@
     }
 }
 
-.button-menu-sm .btn-red, .button-menu-lg .btn-red {
-    color: red!important;
-}
-
 .button-menu-sm .btn-white, .button-menu-lg .btn-white {
     color: white!important;
 }
