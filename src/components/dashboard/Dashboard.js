@@ -16,11 +16,6 @@ function Dashboard({CurrentPanel}) {
 
     return (
         <div className="dashboard">
-          <footer class="footer">
-      <div class="container">
-        <span class="text-muted">Place sticky footer content here.</span>
-      </div>
-    </footer>
             <nav className="navbar navbar-expand-lg navbar-light sticky-top bg-primary flex-md-nowrap p-0 shadow">
                 <a className="navbar-brand col-md-3 col-lg-2 mr-0 px-3 pt-2 pb-2" href="/strip-controller"><Logo/></a>
                 <button className="navbar-toggler position-absolute d-md-none collapsed hidden-md-up" type="button"
@@ -29,6 +24,29 @@ function Dashboard({CurrentPanel}) {
                     <span className="navbar-toggler-icon"/>
                 </button>
                 <input className="form-control form-control-dark w-100 bg-primary" type="text" readOnly={true}/>
+                <ul className="navbar-nav button-menu-lg">
+                    <li className="nav-item text-nowrap">	
+                        <a className="nav-link" href="/logut">	
+                            <button className="btn" title="Reset">
+                                < Icon.RefreshCcw size={18} className="btn-white"/>
+                            </button>	
+                        </a>	
+                    </li>		
+                    <li className="nav-item text-nowrap">	
+                        <a className="nav-link" href="/logut">	
+                            <button className="btn" title="Turn on/off">
+                                < Icon.Power size={18} className="btn-red"/>
+                            </button>	
+                        </a>	
+                    </li>	
+                    <li className="nav-item text-nowrap">	
+                        <a className="nav-link" href="/logut">	
+                            <button className="btn" title="Logout">
+                                < Icon.LogOut size={18} className="btn-red"/>
+                            </button>	
+                        </a>	
+                    </li>	
+                </ul>
             </nav>
             <div className="container-fluid">
                 <div className="row">

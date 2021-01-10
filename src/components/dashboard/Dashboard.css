@@ -133,3 +133,27 @@
     border-color: transparent;
     box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
 }
+
+/*
+ * Button menu
+ */
+
+ .button-menu {
+   justify-content: center;
+   position: absolute;
+   bottom: 0;
+ }
+
+@media (max-width: 768px){
+    .button-menu-lg {
+      display: none!important;
+    }
+}
+
+.button-menu-lg .btn-red {
+    color: red!important;
+}
+
+.button-menu-lg .btn-white {
+    color: white!important;
+}
