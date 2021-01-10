@@ -133,13 +133,11 @@
 }
 
 /*
- * Button menu
+ * Button menu (button-menu-lg and button-menu-sm)
  */
 
- .button-menu {
+ .button-menu-sm {
    justify-content: center;
-   position: absolute;
-   bottom: 0;
  }
 
 @media (max-width: 768px){
@@ -148,10 +146,26 @@
     }
 }
 
-.button-menu-lg .btn-red {
+.button-menu-sm .btn-red, .button-menu-lg .btn-red {
     color: red!important;
 }
 
-.button-menu-lg .btn-white {
+.button-menu-sm .btn-white, .button-menu-lg .btn-white {
     color: white!important;
+}
+
+/*
+ * Footer
+ */
+
+@media (min-width: 768px){
+    footer{
+        display: none!important;
+    }
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
 }

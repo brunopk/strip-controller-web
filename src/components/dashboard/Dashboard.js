@@ -81,6 +81,25 @@ function Dashboard({CurrentPanel}) {
                     </main>
                 </div>
             </div>
+            <footer class="footer">
+                <ul className="nav flex-row button-menu-sm bg-primary">
+                    <li className="nav-item">
+                        <a className="nav-link" href="/">
+                            <Icon.RefreshCcw className="btn-white"/>
+                        </a>
+                    </li>
+                    <li className="nav-item">
+                        <a className="nav-link" href="/">
+                            <Icon.Power className="btn-red"/>
+                        </a>
+                    </li>
+                    <li className="nav-item">
+                        <a className="nav-link" href="/">
+                            <Icon.LogOut className="btn-red"/>
+                        </a>
+                    </li>
+                </ul>
+            </footer>
         </div>
     );
 }
