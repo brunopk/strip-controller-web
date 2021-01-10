@@ -1,3 +1,7 @@
+/*
+ * Based on : https://getbootstrap.com/docs/4.0/examples/dashboard/s
+ */
+
 .body-dashboard {
     font-size: .875rem;
     margin: 0;
@@ -116,12 +120,6 @@
 /*
  * Navbar input
  */
-
- @media (max-width: 768px){
-  .form-control {
-    display: none!important;
-  }
-}
 
 .form-control-dark {
     color: #fff;
