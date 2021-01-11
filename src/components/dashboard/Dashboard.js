@@ -1,9 +1,10 @@
 import React from "react";
 import "rc-color-picker/assets/index.css";
 import "./Dashboard.css";
-import * as Icon from 'react-feather';
 import Logo from "../../components/logo";
-import MainMenu from "../../components/main-menu"
+import MainMenu from "./MainMenu"
+import ButtonMenuLg from "./ButtonMenuLg"
+import ButtonMenuSm from "./ButtonMenuSm"
 import {setBodyClass, setRootClass} from "../../utils/css"
 
 
@@ -22,29 +23,7 @@ function Dashboard({CurrentPanel}) {
                     <span className="navbar-toggler-icon"/>
                 </button>
                 <input className="form-control form-control-dark w-100 bg-primary" type="text" readOnly={true}/>
-                <ul className="navbar-nav button-menu-lg">
-                    <li className="nav-item text-nowrap">	
-                        <a className="nav-link" href="/logut">	
-                            <button className="btn" title="Reset">
-                                < Icon.RefreshCcw size={18} className="btn-white"/>
-                            </button>	
-                        </a>	
-                    </li>		
-                    <li className="nav-item text-nowrap">	
-                        <a className="nav-link" href="/logut">	
-                            <button className="btn" title="Turn on/off">
-                                < Icon.Power size={18} className="btn-white"/>
-                            </button>	
-                        </a>	
-                    </li>	
-                    <li className="nav-item text-nowrap">	
-                        <a className="nav-link" href="/logut">	
-                            <button className="btn" title="Logout">
-                                < Icon.LogOut size={18} className="btn-white"/>
-                            </button>	
-                        </a>	
-                    </li>	
-                </ul>
+                <ButtonMenuLg />
                 <MainMenu id="main-menu-sm" currentPanel={CurrentPanel} />
             </nav>
             <div className="container-fluid">
@@ -59,25 +38,7 @@ function Dashboard({CurrentPanel}) {
                     </main>
                 </div>
             </div>
-            <footer class="footer">
-                <ul className="nav flex-row button-menu-sm bg-primary">
-                    <li className="nav-item">
-                        <a className="nav-link" href="/">
-                            <Icon.RefreshCcw className="btn-white"/>
-                        </a>
-                    </li>
-                    <li className="nav-item">
-                        <a className="nav-link" href="/">
-                            <Icon.Power className="btn-white"/>
-                        </a>
-                    </li>
-                    <li className="nav-item">
-                        <a className="nav-link" href="/">
-                            <Icon.LogOut className="btn-white"/>
-                        </a>
-                    </li>
-                </ul>
-            </footer>
+            <ButtonMenuSm />
         </div>
     );
 }
