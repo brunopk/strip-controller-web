@@ -1,28 +1,23 @@
-import React from "react";
-import * as Icon from 'react-feather';
+import React, { useContext } from 'react';
+import { ButtonMenuContext } from '../../context/ButtonMenuContext';
 
 function ButtonMenuSm() {
-    return (
-        <footer class="footer">
-            <ul className="nav flex-row button-menu-sm bg-primary">
-                <li className="nav-item">
-                    <a className="nav-link" href="/">
-                        <Icon.RefreshCcw className="btn-white"/>
-                    </a>
-                </li>
-                <li className="nav-item">
-                    <a className="nav-link" href="/">
-                        <Icon.Power className="btn-white"/>
-                    </a>
-                </li>
-                <li className="nav-item">
-                    <a className="nav-link" href="/">
-                        <Icon.LogOut className="btn-white"/>
-                    </a>
-                </li>
-            </ul>
-        </footer>
-    );
+  const { buttonList } = useContext(ButtonMenuContext);
+  return (
+    <footer className="footer">
+      <ul className="nav flex-row button-menu-sm bg-primary">
+        { buttonList.map(({ Icon }, index) => (
+          <li className="nav-item text-nowrap" key={index}>
+            <a className="nav-link" href="/logut">
+              <button type="button" className="btn" title="Reset">
+                <Icon size={18} className="btn-white" />
+              </button>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </footer>
+  );
 }
 
 export default ButtonMenuSm;

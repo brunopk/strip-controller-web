@@ -1,32 +1,22 @@
-import React from "react";
-import * as Icon from 'react-feather';
+import React, { useContext } from 'react';
+import { ButtonMenuContext } from '../../context/ButtonMenuContext';
 
 function ButtonMenuLg() {
-    return (
-        <ul className="navbar-nav button-menu-lg">
-            <li className="nav-item text-nowrap">	
-                <a className="nav-link" href="/logut">	
-                    <button className="btn" title="Reset">
-                        <Icon.RefreshCcw size={18} className="btn-white"/>
-                    </button>	
-                </a>	
-            </li>		
-            <li className="nav-item text-nowrap">	
-                <a className="nav-link" href="/logut">	
-                    <button className="btn" title="Turn on/off">
-                        <Icon.Power size={18} className="btn-white"/>
-                    </button>	
-                </a>	
-            </li>	
-            <li className="nav-item text-nowrap">	
-                <a className="nav-link" href="/logut">	
-                    <button className="btn" title="Logout">
-                        <Icon.LogOut size={18} className="btn-white"/>
-                    </button>	
-                </a>	
-            </li>	
-        </ul>
-    )
+  const { buttonList } = useContext(ButtonMenuContext);
+
+  return (
+    <ul className="navbar-nav button-menu-lg">
+      { buttonList.map(({ Icon }, index) => (
+        <li className="nav-item text-nowrap" key={index}>
+          <a className="nav-link" href="/logut">
+            <button type="button" className="btn" title="Reset">
+              <Icon size={18} className="btn-white" />
+            </button>
+          </a>
+        </li>
+      ))}
+    </ul>
+  );
 }
 
 export default ButtonMenuLg;
