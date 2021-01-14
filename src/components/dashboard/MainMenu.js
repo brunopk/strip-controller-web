@@ -27,7 +27,7 @@ function MainMenu({ id, currentPanel }) {
           <li className="nav-item">
             <a className={"nav-link " + (currentPanel === PCustomizable ? "active" : "")} href="/customizable">
               <Icon.Sliders className="feather" />
-              Color disposition
+              Customization
               <span className="sr-only" />
             </a>
           </li>
