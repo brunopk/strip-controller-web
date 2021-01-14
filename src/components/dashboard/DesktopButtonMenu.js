@@ -6,13 +6,16 @@ function DesktopButtonMenu() {
 
   return (
     <ul className="navbar-nav button-menu-lg flex-row">
-      { buttonList.map(({ Icon }, index) => (
+      { buttonList.map(({ Icon, onClick, title }, index) => (
         <li className="nav-item text-nowrap" key={index}>
-          <a className="nav-link" href="/logut">
-            <button type="button" className="btn" title="Reset">
+          <div className="nav-link">
+            <button
+              className="btn"
+              title={typeof title !== 'undefined' ? title : ''}
+              onClick={typeof onClick !== 'undefined' ? () => onClick() : null}>
               <Icon size={18} className="color-white" />
             </button>
-          </a>
+          </div>
         </li>
       ))}
     </ul>
