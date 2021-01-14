@@ -49,7 +49,8 @@ function Dashboard({ CurrentPanel, isLandscape, isPortrait }) {
             <span className="navbar-toggler-icon" />
           </button>
           <input className="form-control form-control-dark w-100 bg-primary" type="text" readOnly />
-          {!isMobile ? (<DesktopButtonMenu />) : <></>}
+          {/* controlled with media-queries */}
+          <DesktopButtonMenu />
           <MainMenu id="main-menu-sm" currentPanel={CurrentPanel} />
         </nav>
         <div className="container-fluid">
@@ -57,18 +58,7 @@ function Dashboard({ CurrentPanel, isLandscape, isPortrait }) {
             <MainMenu id="main-menu-lg" currentPanel={CurrentPanel} />
             <main role="main" className="col-md-9 ml-sm-auto col-lg-10 px-md-4 h-100">
               {/* TODO color list should come from server TODO implement onChose */}
-              <div className="container-fluid">
-                <div className="row">
-                  {isLandscape ? (
-                    <div className="col-1">
-                      <MobileButtonMenu isLandscape={isLandscape} />
-                    </div>
-                  ) : <></>}
-                  <div className={isLandscape ? 'col-11' : 'col'}>
-                    <CurrentPanel values={[]} editable onChose={(hex) => {alert(hex)}}/>
-                  </div>
-                </div>
-              </div>
+              <CurrentPanel values={[]} editable onChose={(hex) => {alert(hex)}}/>
             </main>
           </div>
         </div>

@@ -5,7 +5,7 @@ function DesktopButtonMenu() {
   const { buttonList } = useContext(ButtonMenuContext);
 
   return (
-    <ul className="navbar-nav button-menu-lg">
+    <ul className="navbar-nav button-menu-lg flex-row">
       { buttonList.map(({ Icon }, index) => (
         <li className="nav-item text-nowrap" key={index}>
           <a className="nav-link" href="/logut">

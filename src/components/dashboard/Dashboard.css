@@ -148,6 +148,13 @@
  * Button menu
  */
 
+ @media (max-width: 768px){	
+  .button-menu-lg {	
+    display: none!important;	
+  }	
+}
+
+
 .color-white {
   color: white!important;
 }
