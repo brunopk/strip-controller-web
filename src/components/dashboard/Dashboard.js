@@ -17,8 +17,6 @@ function Dashboard({ CurrentPanel, isLandscape, isPortrait }) {
       Icon: Icon.RefreshCw,
     }, {
       Icon: Icon.Power,
-    }, {
-      Icon: Icon.LogOut,
     }],
   });
   const setButtonList = (current) => (list) => {
