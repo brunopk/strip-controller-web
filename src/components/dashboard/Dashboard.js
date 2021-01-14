@@ -10,7 +10,7 @@ import { isMobile } from 'react-device-detect';
 import { setBodyClass, setRootClass } from '../../utils/css';
 import { ButtonMenuContextProvider } from '../../context/ButtonMenuContext';
 
-function Dashboard({ CurrentPanel, isLandscape }) {
+function Dashboard({ CurrentPanel, isLandscape, isPortrait }) {
   const [buttonMenu, setButtonMenu] = useState({
     interchangeable: typeof CurrentPanel.Buttons !== 'undefined' ? CurrentPanel.Buttons : [],
     fixed: [{
@@ -57,11 +57,22 @@ function Dashboard({ CurrentPanel, isLandscape }) {
             <MainMenu id="main-menu-lg" currentPanel={CurrentPanel} />
             <main role="main" className="col-md-9 ml-sm-auto col-lg-10 px-md-4 h-100">
               {/* TODO color list should come from server TODO implement onChose */}
-              <CurrentPanel values={[]} editable onChose={(hex) => {alert(hex)}}/>
+              <div className="container-fluid">
+                <div className="row">
+                  {isLandscape ? (
+                    <div className="col-1">
+                      <MobileButtonMenu isLandscape={isLandscape} />
+                    </div>
+                  ) : <></>}
+                  <div className={isLandscape ? 'col-11' : 'col'}>
+                    <CurrentPanel values={[]} editable onChose={(hex) => {alert(hex)}}/>
+                  </div>
+                </div>
+              </div>
             </main>
           </div>
         </div>
-        {isMobile ? (<MobileButtonMenu isLandscape={isLandscape} />) : <></>}
+        {isPortrait ? <MobileButtonMenu isLandscape={isLandscape} /> : <></>}
       </div>
     </ButtonMenuContextProvider>
   );
