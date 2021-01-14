@@ -10,7 +10,7 @@ import { isMobile } from 'react-device-detect';
 import { setBodyClass, setRootClass } from '../../utils/css';
 import { ButtonMenuContextProvider } from '../../context/ButtonMenuContext';
 
-function Dashboard({ CurrentPanel, isLandscape, isPortrait }) {
+function Dashboard({ CurrentPanel, isLandscape }) {
   const [buttonMenu, setButtonMenu] = useState({
     interchangeable: typeof CurrentPanel.Buttons !== 'undefined' ? CurrentPanel.Buttons : [],
     fixed: [{
