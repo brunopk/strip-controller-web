@@ -10,7 +10,7 @@ function DesktopButtonMenu() {
         <li className="nav-item text-nowrap" key={index}>
           <a className="nav-link" href="/logut">
             <button type="button" className="btn" title="Reset">
-              <Icon size={18} className="btn-white" />
+              <Icon size={18} className="color-white" />
             </button>
           </a>
         </li>

@@ -145,35 +145,30 @@
 }
 
 /*
- * Button menu (button-menu-lg and button-menu-sm)
+ * Button menu
  */
 
- .button-menu-sm {
-   justify-content: center;
- }
-
-@media (max-width: 768px){
-    .button-menu-lg {
-      display: none!important;
-    }
+.color-white {
+  color: white!important;
 }
 
-.button-menu-sm .btn-white, .button-menu-lg .btn-white {
-    color: white!important;
+.portrait-button-menu {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
 }
 
-/*
- * Footer
- */
-
-@media (min-width: 768px){
-    footer{
-        display: none!important;
-    }
+.portrait-button-menu ul {
+  justify-content: center;
+  border-radius: 1rem 1rem 0 0;
 }
 
-footer {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
+.landscape-button-menu {
+  position: fixed;
+  top: 30%;
+  right: 0;
+}
+
+.landscape-button-menu ul {
+  border-radius: 1rem 0 0 1rem;
 }

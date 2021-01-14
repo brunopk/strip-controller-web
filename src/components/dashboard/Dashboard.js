@@ -28,9 +28,6 @@ function Dashboard({ CurrentPanel, isLandscape, isPortrait }) {
     });
   };
 
-  console.log(`islandscape ${isLandscape}`);
-  console.log(`isPortrait ${isPortrait}`);
-
   setRootClass('root-dashboard');
   setBodyClass('body-dashboard');
 
@@ -66,7 +63,7 @@ function Dashboard({ CurrentPanel, isLandscape, isPortrait }) {
             </main>
           </div>
         </div>
-        {isPortrait ? (<MobileButtonMenu />) : <></>}
+        {isMobile ? (<MobileButtonMenu isLandscape={isLandscape} />) : <></>}
       </div>
     </ButtonMenuContextProvider>
   );
