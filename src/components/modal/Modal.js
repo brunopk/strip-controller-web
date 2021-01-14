@@ -23,5 +23,12 @@ function Modal({ id }) {
     </div>
   );
 }
+/*
+<div class="container-fluid"><div class="row"><div class="alert alert-warning" role="alert" style="
+    width: 100%;
+">
+  This is a warning alert—check it out!
+</div></div><div class="row">Text</div></div>
 
+*/
 export default Modal;

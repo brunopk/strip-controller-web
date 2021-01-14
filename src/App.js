@@ -1,9 +1,9 @@
 import React from 'react';
 import { withOrientationChange } from 'react-device-detect';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import { Panel as PColors } from './components/panels/colors';
-import { Panel as PEffects } from './components/panels/effects';
-import { Panel as PCustomizable } from './components/panels/customizable';
+import * as PColors from './components/panels/colors';
+import * as PCustomizable from './components/panels/customizable';
+import * as PEffects from './components/panels/effects';
 import { UserContextProvider } from './context/UserContext';
 import Login from './components/login';
 import Dashboard from './components/dashboard/Dashboard';

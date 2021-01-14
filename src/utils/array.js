@@ -5,12 +5,13 @@
  * @param {*} newValue new value
  * @returns Returns a new copy of the array with the replacement
  */
-function replace(array, value, newValue){
-  let _array = array.slice()
-  let index = _array.indexOf(value)
-  if(index !== -1)
-    _array[index] = newValue
-  return _array
+function replace(array, value, newValue) {
+  const arrayAux = array.slice();
+  const index = arrayAux.indexOf(value);
+  if (index !== -1) {
+    arrayAux[index] = newValue;
+  }
+  return arrayAux;
 }
 
 /**
@@ -20,12 +21,12 @@ function replace(array, value, newValue){
  * @param {*} newValue new value
  * @returns Returns a new copy of the array with the replacement
  */
-function replaceAt(array, index, newValue){
-  let _array = array.slice()
-  if(index !== -1)
-    _array[index] = newValue
-  return _array
+function replaceAt(array, index, newValue) {
+  const arrayAux = array.slice();
+  if (index !== -1) {
+    arrayAux[index] = newValue;
+  }
+  return arrayAux;
 }
 
-
-export {replace, replaceAt}
+export { replace, replaceAt };

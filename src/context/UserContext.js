@@ -1,20 +1,18 @@
-import React, {useState, createContext} from 'react'
-
+import React, { useState, createContext } from 'react';
 
 const UserContext = createContext();
 
-function UserContextProvider({children}){
+function UserContextProvider({ children }) {
   const [token, setToken] = useState(null);
 
   return (
-    <UserContext.Provider value={{token, setToken}}>
-        {children}
+    <UserContext.Provider value={{ token, setToken }}>
+      {children}
     </UserContext.Provider>
   );
 }
 
-
 export {
   UserContext,
-  UserContextProvider
-}
+  UserContextProvider,
+};

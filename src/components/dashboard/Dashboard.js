@@ -6,7 +6,6 @@ import Logo from '../logo';
 import MainMenu from './MainMenu';
 import DesktopButtonMenu from './DesktopButtonMenu';
 import MobileButtonMenu from './MobileButtonMenu';
-import { isMobile } from 'react-device-detect';
 import { setBodyClass, setRootClass } from '../../utils/css';
 import { ButtonMenuContextProvider } from '../../context/ButtonMenuContext';
 
@@ -58,7 +57,7 @@ function Dashboard({ CurrentPanel, isLandscape, isPortrait }) {
             <MainMenu id="main-menu-lg" currentPanel={CurrentPanel} />
             <main role="main" className="col-md-9 ml-sm-auto col-lg-10 px-md-4 h-100">
               {/* TODO color list should come from server TODO implement onChose */}
-              <CurrentPanel values={[]} editable onChose={(hex) => {alert(hex)}}/>
+              <CurrentPanel values={[]} editable onChose={(hex) => console.log(hex)} />
             </main>
           </div>
         </div>
