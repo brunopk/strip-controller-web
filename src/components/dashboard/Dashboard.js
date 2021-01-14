@@ -5,7 +5,7 @@ import * as Icon from 'react-feather';
 import Logo from '../logo';
 import MainMenu from './MainMenu';
 import ButtonMenuLg from './ButtonMenuLg';
-import ButtonMenuSm from './ButtonMenuSm';
+import ButtonMenuMenuForPortrait from './ButtonMenuForPortrait';
 import { setBodyClass, setRootClass } from '../../utils/css';
 import { ButtonMenuContextProvider } from '../../context/ButtonMenuContext';
 
@@ -65,7 +65,7 @@ function Dashboard({ CurrentPanel, isLandscape, isPortrait }) {
             </main>
           </div>
         </div>
-        <ButtonMenuSm />
+        {isPortrait ? (<ButtonMenuMenuForPortrait />) : <></>}
       </div>
     </ButtonMenuContextProvider>
   );
