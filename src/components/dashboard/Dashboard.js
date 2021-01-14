@@ -4,8 +4,8 @@ import './Dashboard.css';
 import * as Icon from 'react-feather';
 import Logo from '../logo';
 import MainMenu from './MainMenu';
-import ButtonMenuLg from './ButtonMenuLg';
-import ButtonMenuMenuForPortrait from './ButtonMenuForPortrait';
+import DesktopButtonMenu from './DesktopButtonMenu';
+import MobileButtonMenu from './MobileButtonMenu';
 import { setBodyClass, setRootClass } from '../../utils/css';
 import { ButtonMenuContextProvider } from '../../context/ButtonMenuContext';
 
@@ -53,7 +53,7 @@ function Dashboard({ CurrentPanel, isLandscape, isPortrait }) {
             <span className="navbar-toggler-icon" />
           </button>
           <input className="form-control form-control-dark w-100 bg-primary" type="text" readOnly />
-          <ButtonMenuLg />
+          <DesktopButtonMenu />
           <MainMenu id="main-menu-sm" currentPanel={CurrentPanel} />
         </nav>
         <div className="container-fluid">
@@ -65,7 +65,7 @@ function Dashboard({ CurrentPanel, isLandscape, isPortrait }) {
             </main>
           </div>
         </div>
-        {isPortrait ? (<ButtonMenuMenuForPortrait />) : <></>}
+        {isPortrait ? (<MobileButtonMenu />) : <></>}
       </div>
     </ButtonMenuContextProvider>
   );

@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { ButtonMenuContext } from '../../context/ButtonMenuContext';
 
-function ButtonMenuLg() {
+function DesktopButtonMenu() {
   const { buttonList } = useContext(ButtonMenuContext);
 
   return (
@@ -19,4 +19,4 @@ function ButtonMenuLg() {
   );
 }
 
-export default ButtonMenuLg;
+export default DesktopButtonMenu;

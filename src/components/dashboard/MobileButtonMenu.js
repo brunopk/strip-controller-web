@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { ButtonMenuContext } from '../../context/ButtonMenuContext';
 
-function ButtonMenuMenuForPortrait() {
+function MobileButtonMenu() {
   const { buttonList } = useContext(ButtonMenuContext);
   return (
     <footer className="footer">
@@ -20,4 +20,4 @@ function ButtonMenuMenuForPortrait() {
   );
 }
 
-export default ButtonMenuMenuForPortrait;
+export default MobileButtonMenu;
