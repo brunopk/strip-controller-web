@@ -9,7 +9,7 @@ import ButtonMenuSm from './ButtonMenuSm';
 import { setBodyClass, setRootClass } from '../../utils/css';
 import { ButtonMenuContextProvider } from '../../context/ButtonMenuContext';
 
-function Dashboard({ CurrentPanel }) {
+function Dashboard({ CurrentPanel, isLandscape, isPortrait }) {
   const [buttonMenu, setButtonMenu] = useState({
     interchangeable: typeof CurrentPanel.Buttons !== 'undefined' ? CurrentPanel.Buttons : [],
     fixed: [{
@@ -27,14 +27,16 @@ function Dashboard({ CurrentPanel }) {
     });
   };
 
+  console.log(`islandscape ${isLandscape}`);
+  console.log(`isPortrait ${isPortrait}`);
+
   setRootClass('root-dashboard');
   setBodyClass('body-dashboard');
 
   return (
     <ButtonMenuContextProvider
       buttonList={buttonMenu.interchangeable.concat(buttonMenu.fixed)}
-      setButtonList={setButtonList(buttonMenu)}
-    >
+      setButtonList={setButtonList(buttonMenu)}>
       <div className="dashboard">
         <nav className="navbar navbar-expand-lg navbar-light sticky-top bg-primary flex-md-nowrap p-0 shadow">
           <a className="navbar-brand col-md-3 col-lg-2 mr-0 px-3 pt-2 pb-2" href="/strip-controller">
@@ -47,8 +49,7 @@ function Dashboard({ CurrentPanel }) {
             data-target="#main-menu-sm"
             aria-controls="main-menu-sm"
             aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
+            aria-label="Toggle navigation">
             <span className="navbar-toggler-icon" />
           </button>
           <input className="form-control form-control-dark w-100 bg-primary" type="text" readOnly />
