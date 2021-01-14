@@ -1,14 +1,14 @@
-import React from "react";
+import React from 'react';
+import './Logo.css';
 
 function Logo() {
-    return (
-        <div className="logo">
-            <strong><span className="text-danger"> Strip </span></strong>
-            <strong><span className="text-success"> Controller </span></strong>
-            <strong><span className="text-primary"> Web </span></strong>
-        </div>
-
-    );
+  return (
+    <div className="logo">
+      <strong><span className="logo-green"> STRIP </span></strong>
+      <strong><span className="logo-red">   CONTROLLER   </span></strong>
+      <strong><span className="logo-blue"> WEB </span></strong>
+    </div>
+  );
 }
 
 export default Logo;
