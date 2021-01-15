@@ -1,10 +1,10 @@
 import React from 'react';
 import { withOrientationChange } from 'react-device-detect';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import * as PColors from './components/panels/colors';
-import * as PCustomizable from './components/panels/customizable';
-import * as PEffects from './components/panels/effects';
 import { UserContextProvider } from './context/UserContext';
+import PColors from './components/panels/colors/PColors';
+import PCustomization from './components/panels/customization/PCustomization';
+import PEffects from './components/panels/effects/PEffects';
 import Login from './components/login';
 import Dashboard from './components/dashboard/Dashboard';
 import PrivateRoute from './components/private-route';
@@ -45,7 +45,7 @@ function App() {
           <DashboardWithOrentation CurrentPanel={PEffects} />
         </PrivateRoute>
         <PrivateRoute path="/customizable">
-          <DashboardWithOrentation CurrentPanel={PCustomizable} />
+          <DashboardWithOrentation CurrentPanel={PCustomization} />
         </PrivateRoute>
         <Route path="/">
           <Redirect to={{ pathname: '/dashboard' }} />

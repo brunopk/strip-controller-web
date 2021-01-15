@@ -1,8 +1,8 @@
 import React from 'react';
 import * as Icon from 'react-feather';
-import * as PColors from '../panels/colors';
-import * as PCustomizable from '../panels/customizable';
-import * as PEffects from '../panels/effects';
+import PColors from '../panels/colors/PColors';
+import PCustomization from '../panels/customization/PCustomization';
+import PEffects from '../panels/effects/PEffects';
 
 function MainMenu({ id, currentPanel }) {
   return (
@@ -24,7 +24,7 @@ function MainMenu({ id, currentPanel }) {
             </a>
           </li>
           <li className="nav-item">
-            <a className={`nav-link ${currentPanel === PCustomizable ? 'active' : ''}`} href="/customizable">
+            <a className={`nav-link ${currentPanel === PCustomization ? 'active' : ''}`} href="/customizable">
               <Icon.Sliders className="feather" />
               Customization
               <span className="sr-only" />

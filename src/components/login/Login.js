@@ -27,7 +27,7 @@ function Login() {
       // }
     } catch (error) {
       // TODO
-      // console.log(error);
+      console.log(error);
     }
   };
 

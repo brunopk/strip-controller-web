@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import './Panel.css';
+import './PCustomization.css';
 import * as Icon from 'react-feather';
 import $ from 'jquery';
 import Modal from '../../modal';

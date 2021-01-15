@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
+import './PColors.css';
 import { replaceAt } from '../../../utils/array';
 import ColorPicker from 'rc-color-picker';
-import './Panel.css';
 import * as Icon from 'react-feather';
 
 function Color({ hex, onChangeHex, onSelect, editable }) {

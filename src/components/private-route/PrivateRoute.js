@@ -12,7 +12,7 @@ import { UserContext } from '../../context/UserContext';
 function checkAuthenticationAndRedirect(token, location, locationData) {
   // console.log(token);
   // Every request should redirect to login in case of server returns a "Forbidden" error
-  return token != null ? (location) : <Redirect to={{ athname: '/login', state: { from: locationData } }} />;
+  return token != null ? (location) : <Redirect to={{ pathname: '/login', state: { from: locationData } }} />;
 }
 
 /**

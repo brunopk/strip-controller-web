@@ -1,5 +1,5 @@
 import React from 'react';
-import './Panel.css';
+import './PEffects.css';
 import * as Icon from 'react-feather';
 
 function Panel() {
