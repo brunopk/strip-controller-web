@@ -1,0 +1,11 @@
+.modal .alert {
+  width: 100%;
+}
+
+.modal .row {
+  justify-content: center;
+}
+
+.modal-footer {
+  border-top: none!important;
+}
