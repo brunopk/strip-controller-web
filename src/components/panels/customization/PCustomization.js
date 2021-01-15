@@ -1,130 +1,121 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import './PCustomization.css';
 import * as Icon from 'react-feather';
 import $ from 'jquery';
 import Modal from '../../modal';
+import ColorPicker from 'rc-color-picker';
 import { Accordion, Card } from '../../accordion';
 import { ButtonMenuContext } from '../../../context/ButtonMenuContext';
 
-/* function SectionColorConfiguration({ title }) {
-  return (
-    <div className="card">
-      <div className="card-header" id="headingTwo">
-        <h5 className="mb-0">
-         <button
-          className="btn btn-link collapsed"
-          data-toggle="collapse"
-          data-target="#collapseTwo"
-          aria-expanded="false"
-          aria-controls="collapseTwo">
-            {title}
-          </button>
-          <button type="button" className="btn btn-danger section-btn">
-            <Icon.X />
-          </button>
-        </h5>
-      </div>
-      <div id="collapseTwo" className="collapse" aria-labelledby="headingTwo">
-        <div className="card-body">
-          <Colors editable />
-        </div>
-      </div>
-    </div>
-  );
-} */
-
-function SectionRangeConfiguration({ title, from, to }) {
-  // TODO sacar readOnly={true} y hacer onChange
-
-  return (
-    <div className="row row-with-margin-top align-items-center">
-      <div className="col col-4">
-        <span>{title}</span>
-      </div>
-      <div className="col col-2 text-right">
-        <span>From:</span>
-      </div>
-      <div className="col col-2">
-        <input type="number" value={from} className="form-control" readOnly />
-      </div>
-      <div className="col col-2 text-right">
-        <span>To:</span>
-      </div>
-      <div className="col col-2">
-        <input type="number" value={to} className="form-control" readOnly />
-      </div>
-    </div>
-  );
-}
-
-function CardBody() {
+function Form({ showColorPickerModal, colors }) {
   // const { setButtonList } = useContext(ButtonMenuContext);
-  const [numberOfLeds, setNumberOfLeds] = useState(5);
-  const [sections] = useState([{ from: 0, to: numberOfLeds - 1 }]);
 
   return (
     <div className="container-fluid">
       <div className="row row-with-margin-top align-items-center">
         <div className="col col-4">
-          <span>Number of leds:</span>
-        </div>
-        <div className="col col-8">
-          <input
-            type="number"
-            value={numberOfLeds}
-            className="form-control"
-            onChange={(event) => setNumberOfLeds(event.target.value)}
-          />
-        </div>
-      </div>
-      <div className="row row-with-margin-top align-items-center">
-        <div className="col col-4">
-          <span>Number of sections:</span>
+          <span>Start:</span>
         </div>
         <div className="col col-8">
           <input
             type="number"
             className="form-control"
-            value={sections.length}
             onChange={() => null}
           />
         </div>
       </div>
       <div className="row row-with-margin-top align-items-center">
         <div className="col col-4">
-          <span>Sections:</span>
+          <span>End:</span>
         </div>
         <div className="col col-8">
-          <div className="form-control form-control-slider" />
+          <input
+            type="number"
+            className="form-control"
+            onChange={() => null}
+          />
         </div>
       </div>
-      {sections.map((s, i) => <SectionRangeConfiguration key={i + 1} from={s.from} to={s.to} title={`Section ${i + 1}`} />)}
+      <div className="row row-with-margin-top align-items-center">
+        <div className="col col-4">
+          <span>Color:</span>
+        </div>
+        <div className="col col-8">
+          <div className="dropdown">
+            <button
+              className="btn btn-secondary dropdown-toggle"
+              type="button"
+              id="dropdownMenuButton"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+              aria-label="Select color" />
+            <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              {colors.map((hex, index) => (
+                <div className="dropdown-item" key={index} style={{ backgroundColor: hex }}><br /></div>
+              ))}
+              {typeof showColorPickerModal !== 'undefined' ? (
+                <div className="dropdown-item" onClick={() => showColorPickerModal()}>New color</div>
+              ) : (<></>)}
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
 
 function Panel() {
   const { setButtonList } = useContext(ButtonMenuContext);
-  const array = [1, 2, 3];
+  const [currentSection, setCurrentSection] = useState(null);
+  const [currentNewColor, setCurrentNewColor] = useState(null);
+  const [colors, setColors] = useState([]);
+  const [sections, setSections] = useState([]);
+  // eslint-disable-next-line no-shadow
+  const newSection = (sections) => {
+    const l = sections.slice();
+    const s = {
+      i: sections.length === 0 ? 1 : sections.length + 1,
+    };
+    l.push(s);
+    setCurrentSection(s.i);
+    setSections(l);
+  };
+  // eslint-disable-next-line no-shadow
+  const newColor = (colors, c) => {
+    const l = colors.slice();
+    l.push(c);
+    setColors(l);
+  };
+  const showColorPickerModal = () => {
+    $('#modalColorPicker').modal();
+  };
 
   useEffect(() => {
     setButtonList([{
       Icon: Icon.Plus,
       title: 'New section',
-      onClick: () => $('#newSection').modal(),
+      onClick: () => $('#modalNewSection').modal(),
     }]);
   }, []);
 
   return (
     <>
-      <Modal id="newSection" />
+      <Modal id="modalNewSection" primaryBtn={{ text: 'OK', onClick: () => newSection(sections), dataDismiss: 'modal' }}>
+        <Form colors={colors} />
+      </Modal>
+      <Modal id="modalColorPicker" primaryBtn={{ text: 'OK', onClick: () => newColor(colors, currentNewColor), dataDismiss: 'modal' }}>
+        <ColorPicker.Panel
+          enableAlpha={false}
+          onChange={(selected) => setCurrentNewColor(selected.color)} />
+      </Modal>
       <div className="container-fluid panel">
         <div className="row">
           <div className="col  col-12">
             <Accordion>
-              {array.map((id) => (
-                <Card id={`card${id}`} title={`Section ${id}`} key={id}>
-                  <CardBody />
+              {sections.map(({ i }) => (
+                <Card id={`card${i}`} title={`Section ${i}`} key={i} expanded={currentSection === i}>
+                  <Form showColorPickerModal={() => showColorPickerModal()} colors={colors} />
                 </Card>
               ))}
             </Accordion>

@@ -7,19 +7,20 @@
   margin-top: 1rem;
 }
 
-.section-btn {
-  float: right;
+.dropdown .btn, .dropdown-menu {
+  width: 100%;
 }
 
-.rc-slider {
-  padding-top: 0.75rem!important;
+.dropdown .btn {
+  text-align: right;
 }
 
-@media (max-width: 767.98px) {
-  .col {
-      padding-left: 0!important;
-      padding-right: 0!important;
-  }
+.dropdown-item {
+  text-align: center!important;
+}
+
+.dropdown-item {
+  cursor: pointer;
 }
 
 
