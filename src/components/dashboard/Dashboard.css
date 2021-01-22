@@ -167,6 +167,10 @@
   height: 36px;	
 }	
 
+.btn-loader {
+  cursor: default;
+}
+
 .color-white {
   color: white!important;
 }

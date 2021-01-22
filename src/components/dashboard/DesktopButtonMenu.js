@@ -23,7 +23,7 @@ function DesktopButtonMenu() {
       {isFetching ? (
         <li className="nav-item text-nowrap">
           <div className="nav-link">
-            <button className="btn">
+            <button className="btn btn-loader">
               <Loader />
             </button>
           </div>
