@@ -1,8 +1,10 @@
 import React, { useContext } from 'react';
-import { ButtonMenuContext } from '../../context/ButtonMenuContext';
+import Loader from '../loader';
+import { ButtonMenuContext, ApiContext } from '../../context';
 
 function DesktopButtonMenu() {
   const { buttonList } = useContext(ButtonMenuContext);
+  const { isFetching } = useContext(ApiContext);
 
   return (
     <ul className="navbar-nav button-menu-lg flex-row">
@@ -18,6 +20,15 @@ function DesktopButtonMenu() {
           </div>
         </li>
       ))}
+      {isFetching ? (
+        <li className="nav-item text-nowrap">
+          <div className="nav-link">
+            <button className="btn">
+              <Loader />
+            </button>
+          </div>
+        </li>
+      ) : (<></>)}
     </ul>
   );
 }

@@ -163,6 +163,9 @@
   }	
 }
 
+.button-menu-lg button {	
+  height: 36px;	
+}	
 
 .color-white {
   color: white!important;
