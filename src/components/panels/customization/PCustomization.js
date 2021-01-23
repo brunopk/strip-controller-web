@@ -101,10 +101,15 @@ function Panel() {
 
   return (
     <>
-      <Modal id="modalNewSection" primaryBtn={{ text: 'OK', onClick: () => newSection(sections), dataDismiss: 'modal' }}>
+      <Modal
+        id="modalNewSection"
+        primaryBtn={{ text: 'OK', onClick: () => newSection(sections), dataDismiss: 'modal' }}
+        secondaryBtn={{ text: 'CANCEL', onClick: () => null, dataDismiss: 'modal' }}>
         <Form colors={colors} />
       </Modal>
-      <Modal id="modalColorPicker" primaryBtn={{ text: 'OK', onClick: () => newColor(colors, currentNewColor), dataDismiss: 'modal' }}>
+      <Modal
+        id="modalColorPicker"
+        primaryBtn={{ text: 'OK', onClick: () => newColor(colors, currentNewColor), dataDismiss: 'modal' }}>
         <ColorPicker.Panel
           enableAlpha={false}
           onChange={(selected) => setCurrentNewColor(selected.color)} />
