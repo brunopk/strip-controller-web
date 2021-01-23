@@ -1,18 +1,16 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import { UserContext } from '../../context/UserContext';
 import { setBodyClass, setRootClass } from '../../utils/css';
 import Logo from '../logo';
+import Loader from '../loader';
 import './Login.css';
 
 function Login() {
-  setBodyClass('text-center');
-  setRootClass('root-login');
-
+  const [isFetching] = useState(false);
+  const { setToken } = useContext(UserContext);
   const history = useHistory();
   const location = useLocation();
-  const { setToken } = useContext(UserContext);
-
   const { from } = location.state || { from: { pathname: '' } };
   const login = async () => {
     try {
@@ -31,7 +29,16 @@ function Login() {
     }
   };
 
-  return (
+  setBodyClass('text-center');
+  if (isFetching) {
+    setRootClass('root-loader');
+  } else {
+    setRootClass('root-login');
+  }
+
+  return isFetching ? (
+    <Loader />
+  ) : (
     <div className="form-signin">
       <img className="mb-4" src="/logo72.png" alt="" width="72" height="72" />
       <Logo />
