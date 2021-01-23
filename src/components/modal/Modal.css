@@ -9,3 +9,11 @@
 .modal-footer {
   border-top: none!important;
 }
+
+.modal form {
+  width: 100%;
+}
+
+.modal form input[type='submit'] {
+  display: none!important;
+}

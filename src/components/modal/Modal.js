@@ -1,5 +1,100 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
+import { FormContextProvider, FormContext } from '../../context';
+import $ from 'jquery';
 import './Modal.css';
+
+function ModalBody({ children, formId, warning, error }) {
+  return (
+    <div className="modal-body">
+      <div className="container-fluid">
+        {typeof warning !== 'undefined' ? (
+          <div className="row">
+            <div className="alert alert-warning" role="alert">
+              {warning}
+            </div>
+          </div>
+        ) : (<></>) }
+        {typeof error !== 'undefined' ? (
+          <div className="row">
+            <div className="alert alert-danger" role="alert">
+              {error}
+            </div>
+          </div>
+        ) : (<></>)}
+        <div className="row">
+          <form id={formId}>
+            {children}
+            <input type="submit" />
+          </form>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ModalFooter({ modalId, primaryBtn, secondaryBtn }) {
+  const { validationFunction } = useContext(FormContext);
+  const validate = validationFunction;
+
+  return (
+    <div className="modal-footer">
+      {typeof secondaryBtn !== 'undefined' ? (
+        <button
+          type="button"
+          className="btn btn-secondary"
+          data-dismiss="modal"
+          onClick={() => secondaryBtn.onClick()}>
+          {secondaryBtn.text}
+        </button>
+      ) : (
+        <></>
+      )}
+      <button
+        type="button"
+        className="btn btn-primary"
+        onClick={() => {
+          if (validate()) {
+            $(`#${modalId}`).modal('hide');
+            primaryBtn.onClick();
+          }
+        }}>
+        {primaryBtn.text}
+      </button>
+    </div>
+  );
+}
+
+function ModalContent({ children, modalId, warning, error, primaryBtn, secondaryBtn }) {
+  const [validationFunction, setValidationFunction] = useState(null);
+  const formId = `form${modalId}`;
+
+  const wrappedSetValidationFunction = (func) => {
+    // eslint-disable-next-line no-shadow
+    const validationFunction = () => () => {
+      const myForm = $(`#form${modalId}`);
+      if (!myForm[0].checkValidity()) {
+        // If the form is invalid, submit it. The form won't actually submit;
+        // this will just cause the browser to display the native HTML5 error messages.
+        myForm.find(':submit').trigger('click');
+        return false;
+      }
+      // See https://medium.com/swlh/how-to-store-a-function-with-the-usestate-hook-in-react-8a88dd4eede1
+      return func()();
+    };
+    setValidationFunction(validationFunction);
+  };
+
+  return (
+    <FormContextProvider
+      validationFunction={validationFunction}
+      setValidationFunction={wrappedSetValidationFunction}>
+      <ModalBody formId={formId} warning={warning} error={error}>
+        {children}
+      </ModalBody>
+      <ModalFooter modalId={modalId} primaryBtn={primaryBtn} secondaryBtn={secondaryBtn} />
+    </FormContextProvider>
+  );
+}
 
 /**
  * Show it with $('id').modal() (import jquery as $ )
@@ -40,10 +135,6 @@ function Modal({ children, id, warning, error, primaryBtn, secondaryBtn }) {
     throw new Error('Event not defined for primary button');
   }
 
-  if (typeof primaryBtn.dataDismiss !== 'string') {
-    throw new Error('Dismiss not defined for primary button');
-  }
-
   if (typeof secondaryBtn === 'object') {
     if (typeof secondaryBtn.text !== 'string') {
       throw new Error('Text not defined for secondary button');
@@ -58,47 +149,14 @@ function Modal({ children, id, warning, error, primaryBtn, secondaryBtn }) {
     <div className="modal fade" id={id} tabIndex="-1" role="dialog" aria-labelledby={id} aria-hidden="true">
       <div className="modal-dialog modal-dialog-centered" role="document">
         <div className="modal-content">
-          <div className="modal-body">
-            <div className="container-fluid">
-              {typeof warning !== 'undefined' ? (
-                <div className="row">
-                  <div className="alert alert-warning" role="alert">
-                    {warning}
-                  </div>
-                </div>
-              ) : (<></>) }
-              {typeof error !== 'undefined' ? (
-                <div className="row">
-                  <div className="alert alert-danger" role="alert">
-                    {error}
-                  </div>
-                </div>
-              ) : (<></>)}
-              <div className="row">
-                {children}
-              </div>
-            </div>
-          </div>
-          <div className="modal-footer">
-            {typeof secondaryBtn !== 'undefined' ? (
-              <button
-                type="button"
-                className="btn btn-secondary"
-                data-dismiss="modal"
-                onClick={() => secondaryBtn.onClick()}>
-                {secondaryBtn.text}
-              </button>
-            ) : (
-              <></>
-            )}
-            <button
-              type="button"
-              className="btn btn-primary"
-              data-dismiss={primaryBtn.dataDismiss}
-              onClick={() => primaryBtn.onClick()}>
-              {primaryBtn.text}
-            </button>
-          </div>
+          <ModalContent
+            modalId={id}
+            warning={warning}
+            error={error}
+            primaryBtn={primaryBtn}
+            secondaryBtn={secondaryBtn}>
+            {children}
+          </ModalContent>
         </div>
       </div>
     </div>

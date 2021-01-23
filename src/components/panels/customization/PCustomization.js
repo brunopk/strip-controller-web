@@ -5,10 +5,18 @@ import $ from 'jquery';
 import Modal from '../../modal';
 import ColorPicker from 'rc-color-picker';
 import { Accordion, Card } from '../../accordion';
-import { ButtonMenuContext } from '../../../context/ButtonMenuContext';
+import { ButtonMenuContext, FormContext } from '../../../context';
+import { Input } from '../../form';
 
-function Form({ showColorPickerModal, colors }) {
+function SectionParameters({ showColorPickerModal, colors }) {
   // const { setButtonList } = useContext(ButtonMenuContext);
+  const formContext = useContext(FormContext);
+
+  useEffect(() => {
+    if (typeof formContext !== 'undefined') {
+      formContext.setValidationFunction(() => () => true);
+    }
+  }, []);
 
   return (
     <div className="container-fluid">
@@ -17,11 +25,7 @@ function Form({ showColorPickerModal, colors }) {
           <span>Start:</span>
         </div>
         <div className="col col-8">
-          <input
-            type="number"
-            className="form-control"
-            onChange={() => null}
-          />
+          <Input type="number" onChange={() => null} required />
         </div>
       </div>
       <div className="row row-with-margin-top align-items-center">
@@ -29,11 +33,7 @@ function Form({ showColorPickerModal, colors }) {
           <span>End:</span>
         </div>
         <div className="col col-8">
-          <input
-            type="number"
-            className="form-control"
-            onChange={() => null}
-          />
+          <Input type="number" onChange={() => null} required />
         </div>
       </div>
       <div className="row row-with-margin-top align-items-center">
@@ -103,9 +103,9 @@ function Panel() {
     <>
       <Modal
         id="modalNewSection"
-        primaryBtn={{ text: 'OK', onClick: () => newSection(sections), dataDismiss: 'modal' }}
+        primaryBtn={{ text: 'OK', onClick: () => newSection(sections) }}
         secondaryBtn={{ text: 'CANCEL', onClick: () => null, dataDismiss: 'modal' }}>
-        <Form colors={colors} />
+        <SectionParameters colors={colors} />
       </Modal>
       <Modal
         id="modalColorPicker"
@@ -120,7 +120,9 @@ function Panel() {
             <Accordion>
               {sections.map(({ i }) => (
                 <Card id={`card${i}`} title={`Section ${i}`} key={i} expanded={currentSection === i}>
-                  <Form showColorPickerModal={() => showColorPickerModal()} colors={colors} />
+                  <SectionParameters
+                    showColorPickerModal={() => showColorPickerModal()}
+                    colors={colors} />
                 </Card>
               ))}
             </Accordion>
