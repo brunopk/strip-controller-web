@@ -66,6 +66,7 @@ function ModalFooter({ modalId, primaryBtn, secondaryBtn }) {
 
 function ModalContent({ children, modalId, warning, error, primaryBtn, secondaryBtn }) {
   const [validationFunction, setValidationFunction] = useState(null);
+  const [lastEditedInput, setLastEditedInput] = useState(null);
   const formId = `form${modalId}`;
 
   const wrappedSetValidationFunction = (func) => {
@@ -87,7 +88,9 @@ function ModalContent({ children, modalId, warning, error, primaryBtn, secondary
   return (
     <FormContextProvider
       validationFunction={validationFunction}
-      setValidationFunction={wrappedSetValidationFunction}>
+      lastEditedInput={lastEditedInput}
+      setValidationFunction={wrappedSetValidationFunction}
+      setLastEditedInput={setLastEditedInput}>
       <ModalBody formId={formId} warning={warning} error={error}>
         {children}
       </ModalBody>

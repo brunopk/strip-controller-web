@@ -5,17 +5,25 @@ import $ from 'jquery';
 import Modal from '../../modal';
 import ColorPicker from 'rc-color-picker';
 import { Accordion, Card } from '../../accordion';
-import { ButtonMenuContext, FormContext } from '../../../context';
+import { ButtonMenuContext, FormContext, FormContextProvider } from '../../../context';
 import { Input } from '../../form';
 
-function SectionParameters({ showColorPickerModal, colors }) {
+function SectionParameters({ id, showColorPickerModal, colors, isModal }) {
   // const { setButtonList } = useContext(ButtonMenuContext);
   const formContext = useContext(FormContext);
+  // TODO: set this with result of sending request to API
+  const error = true;
+
+  if (typeof isModal === 'undefined') {
+    isModal = false;
+  }
 
   useEffect(() => {
-    if (typeof formContext !== 'undefined') {
+    // TODO: set corresponding validation for modal
+    if (isModal && typeof formContext !== 'undefined') {
       formContext.setValidationFunction(() => () => true);
     }
+    // TODO: set corresponding validation for the whole panel
   }, []);
 
   return (
@@ -25,7 +33,12 @@ function SectionParameters({ showColorPickerModal, colors }) {
           <span>Start:</span>
         </div>
         <div className="col col-8">
-          <Input type="number" onChange={() => null} required />
+          <Input
+            id={`${id}InputStart`}
+            type="number"
+            onChange={(value) => console.log(value)}
+            isInvalid={error && `${id}InputStart` === formContext.lastEditedInput}
+            required />
         </div>
       </div>
       <div className="row row-with-margin-top align-items-center">
@@ -33,7 +46,12 @@ function SectionParameters({ showColorPickerModal, colors }) {
           <span>End:</span>
         </div>
         <div className="col col-8">
-          <Input type="number" onChange={() => null} required />
+          <Input
+            id={`${id}InputEnd`}
+            type="number"
+            onChange={(value) => console.log(value)}
+            isInvalid={error && `${id}InputEnd` === formContext.lastEditedInput}
+            required />
         </div>
       </div>
       <div className="row row-with-margin-top align-items-center">
@@ -67,6 +85,8 @@ function SectionParameters({ showColorPickerModal, colors }) {
 
 function Panel() {
   const { setButtonList } = useContext(ButtonMenuContext);
+  const [validationFunction, setValidationFunction] = useState(() => () => true);
+  const [lastEditedInput, setLastEditedInput] = useState([]);
   const [currentSection, setCurrentSection] = useState(null);
   const [currentNewColor, setCurrentNewColor] = useState(null);
   const [colors, setColors] = useState([]);
@@ -105,7 +125,7 @@ function Panel() {
         id="modalNewSection"
         primaryBtn={{ text: 'OK', onClick: () => newSection(sections) }}
         secondaryBtn={{ text: 'CANCEL', onClick: () => null, dataDismiss: 'modal' }}>
-        <SectionParameters colors={colors} />
+        <SectionParameters id="newSection" colors={colors} isModal />
       </Modal>
       <Modal
         id="modalColorPicker"
@@ -114,21 +134,28 @@ function Panel() {
           enableAlpha={false}
           onChange={(selected) => setCurrentNewColor(selected.color)} />
       </Modal>
-      <div className="container-fluid panel">
-        <div className="row">
-          <div className="col  col-12">
-            <Accordion>
-              {sections.map(({ i }) => (
-                <Card id={`card${i}`} title={`Section ${i}`} key={i} expanded={currentSection === i}>
-                  <SectionParameters
-                    showColorPickerModal={() => showColorPickerModal()}
-                    colors={colors} />
-                </Card>
-              ))}
-            </Accordion>
+      <FormContextProvider
+        validationFunction={validationFunction}
+        lastEditedInput={lastEditedInput}
+        setValidationFunction={setValidationFunction}
+        setLastEditedInput={setLastEditedInput}>
+        <div className="container-fluid panel">
+          <div className="row">
+            <div className="col  col-12">
+              <Accordion>
+                {sections.map(({ i }) => (
+                  <Card id={`card${i}`} title={`Section ${i}`} key={i} expanded={currentSection === i}>
+                    <SectionParameters
+                      id={`section${i}`}
+                      showColorPickerModal={() => showColorPickerModal()}
+                      colors={colors} />
+                  </Card>
+                ))}
+              </Accordion>
+            </div>
           </div>
         </div>
-      </div>
+      </FormContextProvider>
     </>
   );
 }
