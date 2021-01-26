@@ -6,8 +6,10 @@ function FormContextProvider({
   children,
   validationFunction,
   lastEditedInput,
+  apiError,
   setValidationFunction,
-  setLastEditedInput }) {
+  setLastEditedInput,
+  setApiError }) {
   if (typeof lastEditedInput === 'undefined') {
     throw new Error('lastEditedInput is not defined');
   }
@@ -26,7 +28,13 @@ function FormContextProvider({
 
   return (
     <FormContext.Provider
-      value={{ validationFunction, lastEditedInput, setValidationFunction, setLastEditedInput }}>
+      value={{
+        validationFunction,
+        lastEditedInput,
+        apiError,
+        setValidationFunction,
+        setLastEditedInput,
+        setApiError }}>
       {children}
     </FormContext.Provider>
   );

@@ -5,17 +5,17 @@ import $ from 'jquery';
 import Modal from '../../modal';
 import ColorPicker from 'rc-color-picker';
 import { Accordion, Card } from '../../accordion';
+import { Danger } from '../../alert';
 import { ButtonMenuContext, FormContext, FormContextProvider } from '../../../context';
 import { Input } from '../../form';
 
 function SectionParameters({ id, showColorPickerModal, colors, isModal }) {
   // const { setButtonList } = useContext(ButtonMenuContext);
-  const formContext = useContext(FormContext);
-  // TODO: set this with result of sending request to API
-  const [apiError, setApiError] = useState(false);
+  const { setApiError, lastEditedInput, setValidationFunction, apiError } = useContext(FormContext);
   // TODO: this function should call API
   const editSection = (value) => {
-    setApiError(true);
+    // TODO: set this with result of sending request to API
+    setApiError('Replace this with the corresponding error message');
     console.log(value);
   };
 
@@ -25,8 +25,8 @@ function SectionParameters({ id, showColorPickerModal, colors, isModal }) {
 
   useEffect(() => {
     // TODO: set corresponding validation for modal
-    if (isModal && typeof formContext !== 'undefined') {
-      formContext.setValidationFunction(() => () => true);
+    if (isModal) {
+      setValidationFunction(() => () => true);
     }
     // TODO: set corresponding validation for the whole panel
   }, []);
@@ -42,9 +42,9 @@ function SectionParameters({ id, showColorPickerModal, colors, isModal }) {
             id={`${id}Start`}
             type="number"
             value=""
-            onChange={(value) => console.log(value)}
+            onChange={() => null}
             onBlur={editSection}
-            isInvalid={apiError && `${id}Start` === formContext.lastEditedInput}
+            isInvalid={apiError && `${id}Start` === lastEditedInput}
             required />
         </div>
       </div>
@@ -57,9 +57,9 @@ function SectionParameters({ id, showColorPickerModal, colors, isModal }) {
             id={`${id}End`}
             type="number"
             value=""
-            onChange={(value) => console.log(value)}
+            onChange={() => null}
             onBlur={editSection}
-            isInvalid={apiError && `${id}End` === formContext.lastEditedInput}
+            isInvalid={apiError && `${id}End` === lastEditedInput}
             required />
         </div>
       </div>
@@ -95,6 +95,8 @@ function SectionParameters({ id, showColorPickerModal, colors, isModal }) {
 function Panel() {
   const { setButtonList } = useContext(ButtonMenuContext);
   const [validationFunction, setValidationFunction] = useState(() => () => true);
+  // TODO: set this with result of sending request to API (probably it should be a string)
+  const [apiError, setApiError] = useState(false);
   const [lastEditedInput, setLastEditedInput] = useState([]);
   const [currentSection, setCurrentSection] = useState(null);
   const [currentNewColor, setCurrentNewColor] = useState(null);
@@ -146,9 +148,20 @@ function Panel() {
       <FormContextProvider
         validationFunction={validationFunction}
         lastEditedInput={lastEditedInput}
+        apiError={apiError}
         setValidationFunction={setValidationFunction}
-        setLastEditedInput={setLastEditedInput}>
+        setLastEditedInput={setLastEditedInput}
+        setApiError={setApiError}>
         <div className="container-fluid panel">
+          {apiError ? (
+            <div className="row">
+              <div className="col col-12">
+                <Danger>
+                  {apiError}
+                </Danger>
+              </div>
+            </div>
+          ) : (<></>)}
           <div className="row">
             <div className="col  col-12">
               <Accordion>

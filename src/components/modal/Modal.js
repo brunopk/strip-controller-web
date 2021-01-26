@@ -1,24 +1,18 @@
 import React, { useContext, useState } from 'react';
 import { FormContextProvider, FormContext } from '../../context';
-import { Danger, Warning } from '../alert';
+import { Danger } from '../alert';
 import $ from 'jquery';
 import './Modal.css';
 
-function ModalBody({ children, formId, warning, error }) {
+function ModalBody({ children, formId }) {
+  const { apiError } = useContext(FormContext);
   return (
     <div className="modal-body">
       <div className="container-fluid">
-        {typeof warning !== 'undefined' ? (
-          <div className="row">
-            <Warning>
-              {warning}
-            </Warning>
-          </div>
-        ) : (<></>) }
-        {typeof error !== 'undefined' ? (
+        {apiError ? (
           <div className="row">
             <Danger>
-              {error}
+              {apiError}
             </Danger>
           </div>
         ) : (<></>)}
@@ -65,9 +59,10 @@ function ModalFooter({ modalId, primaryBtn, secondaryBtn }) {
   );
 }
 
-function ModalContent({ children, modalId, warning, error, primaryBtn, secondaryBtn }) {
-  const [validationFunction, setValidationFunction] = useState(null);
+function ModalContent({ children, modalId, primaryBtn, secondaryBtn }) {
+  const [validationFunction, setValidationFunction] = useState(() => () => true);
   const [lastEditedInput, setLastEditedInput] = useState(null);
+  const [apiError, setApiError] = useState(false);
   const formId = `form${modalId}`;
 
   const wrappedSetValidationFunction = (func) => {
@@ -90,9 +85,11 @@ function ModalContent({ children, modalId, warning, error, primaryBtn, secondary
     <FormContextProvider
       validationFunction={validationFunction}
       lastEditedInput={lastEditedInput}
+      apiError={apiError}
       setValidationFunction={wrappedSetValidationFunction}
-      setLastEditedInput={setLastEditedInput}>
-      <ModalBody formId={formId} warning={warning} error={error}>
+      setLastEditedInput={setLastEditedInput}
+      setApiError={setApiError}>
+      <ModalBody formId={formId}>
         {children}
       </ModalBody>
       <ModalFooter modalId={modalId} primaryBtn={primaryBtn} secondaryBtn={secondaryBtn} />
@@ -122,7 +119,7 @@ function ModalContent({ children, modalId, warning, error, primaryBtn, secondary
  * secondaryBtn.onClick: Function
  *
  */
-function Modal({ children, id, warning, error, primaryBtn, secondaryBtn }) {
+function Modal({ children, id, primaryBtn, secondaryBtn }) {
   if (typeof error !== 'undefined' && typeof warning !== 'undefined') {
     throw new Error('Cannot show error and warning at the same time');
   }
@@ -155,8 +152,6 @@ function Modal({ children, id, warning, error, primaryBtn, secondaryBtn }) {
         <div className="modal-content">
           <ModalContent
             modalId={id}
-            warning={warning}
-            error={error}
             primaryBtn={primaryBtn}
             secondaryBtn={secondaryBtn}>
             {children}
