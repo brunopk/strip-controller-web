@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { FormContextProvider, FormContext } from '../../context';
+import { Danger, Warning } from '../alert';
 import $ from 'jquery';
 import './Modal.css';
 
@@ -9,16 +10,16 @@ function ModalBody({ children, formId, warning, error }) {
       <div className="container-fluid">
         {typeof warning !== 'undefined' ? (
           <div className="row">
-            <div className="alert alert-warning" role="alert">
+            <Warning>
               {warning}
-            </div>
+            </Warning>
           </div>
         ) : (<></>) }
         {typeof error !== 'undefined' ? (
           <div className="row">
-            <div className="alert alert-danger" role="alert">
+            <Danger>
               {error}
-            </div>
+            </Danger>
           </div>
         ) : (<></>)}
         <div className="row">
