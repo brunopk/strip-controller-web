@@ -9,9 +9,19 @@ import { Danger } from '../../alert';
 import { ButtonMenuContext, FormContext, FormContextProvider } from '../../../context';
 import { Input } from '../../form';
 
-function SectionParameters({ id, showColorPickerModal, colors, isModal }) {
-  // const { setButtonList } = useContext(ButtonMenuContext);
-  const { setApiError, lastEditedInput, setValidationFunction, apiError } = useContext(FormContext);
+function SectionParameters({
+  id,
+  currentButtonList,
+  setCurrentButtonList,
+  showColorPickerModal,
+  colors,
+  isModal }) {
+  const {
+    apiError,
+    editedInputs,
+    setValidationFunction,
+    setApiError,
+    setEditedInputs } = useContext(FormContext);
   // TODO: this function should call API
   const editSection = (value) => {
     // TODO: set this with result of sending request to API
@@ -23,6 +33,7 @@ function SectionParameters({ id, showColorPickerModal, colors, isModal }) {
     isModal = false;
   }
 
+  // Sets form validations
   useEffect(() => {
     // TODO: set corresponding validation for modal
     if (isModal) {
@@ -30,6 +41,33 @@ function SectionParameters({ id, showColorPickerModal, colors, isModal }) {
     }
     // TODO: set corresponding validation for the whole panel
   }, []);
+
+  // Update contextual button menu
+  useEffect(() => {
+    if (!isModal) {
+      let newButtonList = null;
+      // If any input changes -> add upload button
+      if (editedInputs.length > 0) {
+        // Prevents adding same button twice
+        if (currentButtonList.filter((x) => x.Icon === Icon.Upload).length === 0) {
+          newButtonList = [{
+            Icon: Icon.Upload,
+            title: 'Send changes',
+            onClick: () => {
+              setEditedInputs([]);
+              console.log('Send changes');
+            }
+          }, ...currentButtonList];
+        } else {
+          newButtonList = currentButtonList.slice();
+        }
+      // If upload button was pressed -> all inputs are in unchanged state -> remove upload button
+      } else {
+        newButtonList = currentButtonList.filter((x) => x.Icon !== Icon.Upload);
+      }
+      setCurrentButtonList(newButtonList);
+    }
+  }, [editedInputs]);
 
   return (
     <div className="container-fluid">
@@ -44,7 +82,7 @@ function SectionParameters({ id, showColorPickerModal, colors, isModal }) {
             value=""
             onChange={() => null}
             onBlur={editSection}
-            isInvalid={apiError && `${id}Start` === lastEditedInput}
+            isInvalid={apiError && editedInputs.filter((x) => `${id}Start` === x).length > 0}
             required />
         </div>
       </div>
@@ -59,7 +97,7 @@ function SectionParameters({ id, showColorPickerModal, colors, isModal }) {
             value=""
             onChange={() => null}
             onBlur={editSection}
-            isInvalid={apiError && `${id}End` === lastEditedInput}
+            isInvalid={apiError && editedInputs.filter((x) => `${id}End` === x).length > 0}
             required />
         </div>
       </div>
@@ -94,10 +132,12 @@ function SectionParameters({ id, showColorPickerModal, colors, isModal }) {
 
 function Panel() {
   const { setButtonList } = useContext(ButtonMenuContext);
+  const [currentButtonList, setCurrentButtonList] = useState([]);
   const [validationFunction, setValidationFunction] = useState(() => () => true);
   // TODO: set this with result of sending request to API (probably it should be a string)
   const [apiError, setApiError] = useState(false);
-  const [lastEditedInput, setLastEditedInput] = useState([]);
+  const [editedInputs, setEditedInputs] = useState([]);
+  const [lastEditedInput, setLastEditedInput] = useState(null);
   const [currentSection, setCurrentSection] = useState(null);
   const [currentNewColor, setCurrentNewColor] = useState(null);
   const [colors, setColors] = useState([]);
@@ -123,12 +163,17 @@ function Panel() {
   };
 
   useEffect(() => {
-    setButtonList([{
-      Icon: Icon.Plus,
-      title: 'New section',
-      onClick: () => $('#modalNewSection').modal(),
-    }]);
-  }, []);
+    const newButtonList = currentButtonList.slice();
+    if (newButtonList.filter((x) => x.Icon === Icon.Plus).length === 0) {
+      newButtonList.push({
+        Icon: Icon.Plus,
+        title: 'New section',
+        onClick: () => $('#modalNewSection').modal(),
+      });
+    }
+    setCurrentButtonList(newButtonList);
+    setButtonList(newButtonList);
+  }, [currentButtonList.length]);
 
   return (
     <>
@@ -148,10 +193,12 @@ function Panel() {
       <FormContextProvider
         validationFunction={validationFunction}
         lastEditedInput={lastEditedInput}
+        editedInputs={editedInputs}
         apiError={apiError}
         setValidationFunction={setValidationFunction}
         setLastEditedInput={setLastEditedInput}
-        setApiError={setApiError}>
+        setApiError={setApiError}
+        setEditedInputs={setEditedInputs}>
         <div className="container-fluid panel">
           {apiError ? (
             <div className="row">
@@ -169,6 +216,8 @@ function Panel() {
                   <Card id={`card${i}`} title={`Section ${i}`} key={i} expanded={currentSection === i}>
                     <SectionParameters
                       id={`section${i}`}
+                      currentButtonList={currentButtonList}
+                      setCurrentButtonList={setCurrentButtonList}
                       showColorPickerModal={() => showColorPickerModal()}
                       colors={colors} />
                   </Card>

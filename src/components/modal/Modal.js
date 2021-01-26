@@ -62,6 +62,7 @@ function ModalFooter({ modalId, primaryBtn, secondaryBtn }) {
 function ModalContent({ children, modalId, primaryBtn, secondaryBtn }) {
   const [validationFunction, setValidationFunction] = useState(() => () => true);
   const [lastEditedInput, setLastEditedInput] = useState(null);
+  const [editedInputs, setEditedInputs] = useState([]);
   const [apiError, setApiError] = useState(false);
   const formId = `form${modalId}`;
 
@@ -85,10 +86,12 @@ function ModalContent({ children, modalId, primaryBtn, secondaryBtn }) {
     <FormContextProvider
       validationFunction={validationFunction}
       lastEditedInput={lastEditedInput}
+      editedInputs={editedInputs}
       apiError={apiError}
       setValidationFunction={wrappedSetValidationFunction}
       setLastEditedInput={setLastEditedInput}
-      setApiError={setApiError}>
+      setApiError={setApiError}
+      setEditedInputs={setEditedInputs}>
       <ModalBody formId={formId}>
         {children}
       </ModalBody>

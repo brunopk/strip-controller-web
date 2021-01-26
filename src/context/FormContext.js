@@ -6,10 +6,16 @@ function FormContextProvider({
   children,
   validationFunction,
   lastEditedInput,
+  editedInputs,
   apiError,
   setValidationFunction,
   setLastEditedInput,
-  setApiError }) {
+  setApiError,
+  setEditedInputs }) {
+  if (typeof editedInputs === 'undefined') {
+    throw new Error('editedInputs is not defined');
+  }
+
   if (typeof lastEditedInput === 'undefined') {
     throw new Error('lastEditedInput is not defined');
   }
@@ -26,15 +32,21 @@ function FormContextProvider({
     throw new Error('setValidationFunction is not defined');
   }
 
+  if (typeof setEditedInputs === 'undefined') {
+    throw new Error('setEditedInputs is not defined');
+  }
+
   return (
     <FormContext.Provider
       value={{
         validationFunction,
         lastEditedInput,
+        editedInputs,
         apiError,
         setValidationFunction,
         setLastEditedInput,
-        setApiError }}>
+        setApiError,
+        setEditedInputs }}>
       {children}
     </FormContext.Provider>
   );
