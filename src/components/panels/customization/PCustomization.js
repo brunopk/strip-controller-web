@@ -12,7 +12,12 @@ function SectionParameters({ id, showColorPickerModal, colors, isModal }) {
   // const { setButtonList } = useContext(ButtonMenuContext);
   const formContext = useContext(FormContext);
   // TODO: set this with result of sending request to API
-  const error = true;
+  const [apiError, setApiError] = useState(false);
+  // TODO: this function should call API
+  const editSection = (value) => {
+    setApiError(true);
+    console.log(value);
+  };
 
   if (typeof isModal === 'undefined') {
     isModal = false;
@@ -34,10 +39,12 @@ function SectionParameters({ id, showColorPickerModal, colors, isModal }) {
         </div>
         <div className="col col-8">
           <Input
-            id={`${id}InputStart`}
+            id={`${id}Start`}
             type="number"
+            value=""
             onChange={(value) => console.log(value)}
-            isInvalid={error && `${id}InputStart` === formContext.lastEditedInput}
+            onBlur={editSection}
+            isInvalid={apiError && `${id}Start` === formContext.lastEditedInput}
             required />
         </div>
       </div>
@@ -47,10 +54,12 @@ function SectionParameters({ id, showColorPickerModal, colors, isModal }) {
         </div>
         <div className="col col-8">
           <Input
-            id={`${id}InputEnd`}
+            id={`${id}End`}
             type="number"
+            value=""
             onChange={(value) => console.log(value)}
-            isInvalid={error && `${id}InputEnd` === formContext.lastEditedInput}
+            onBlur={editSection}
+            isInvalid={apiError && `${id}End` === formContext.lastEditedInput}
             required />
         </div>
       </div>

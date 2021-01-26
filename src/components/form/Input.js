@@ -1,12 +1,14 @@
 /* eslint-disable no-shadow */
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { FormContext } from '../../context';
 
-function Input({ type, id, onChange, required, isInvalid, title }) {
+function Input({ type, id, value, onChange, onBlur, required, isInvalid, title }) {
   const formContext = useContext(FormContext);
+  const [currentValue, setCurrentValue] = useState(value);
   let className = 'form-control';
   const wrappedOnChange = (event) => {
     formContext.setLastEditedInput(id);
+    setCurrentValue(event.target.value);
     onChange(event.target.value);
   };
 
@@ -16,6 +18,10 @@ function Input({ type, id, onChange, required, isInvalid, title }) {
 
   if (typeof id === 'undefined') {
     throw new Error('Input component must have an id');
+  }
+
+  if (typeof currentValue === 'undefined') {
+    throw new Error('Input component must define a value');
   }
 
   if (typeof required === 'undefined') {
@@ -34,8 +40,10 @@ function Input({ type, id, onChange, required, isInvalid, title }) {
     <input
       type={type}
       className={className}
+      value={currentValue}
       title={title}
-      onChange={(value) => wrappedOnChange(value)}
+      onChange={(event) => wrappedOnChange(event)}
+      onBlur={() => onBlur(currentValue)}
       required={required} />
   );
 }
