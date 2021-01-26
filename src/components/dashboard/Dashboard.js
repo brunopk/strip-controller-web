@@ -11,7 +11,7 @@ import { ButtonMenuContextProvider, ApiContextProvider } from '../../context';
 
 function Dashboard({ CurrentPanel, isLandscape, isPortrait }) {
   const [isFetching, setIsFetching] = useState(false);
-  const [buttonMenu, setButtonMenu] = useState({
+  const [contextualButtonMenu, setButtonContextualMenu] = useState({
     interchangeable: typeof CurrentPanel.Buttons !== 'undefined' ? CurrentPanel.Buttons : [],
     fixed: [{
       Icon: Icon.RefreshCw,
@@ -19,8 +19,8 @@ function Dashboard({ CurrentPanel, isLandscape, isPortrait }) {
       Icon: Icon.Power,
     }],
   });
-  const setButtonList = (current) => (list) => {
-    setButtonMenu({
+  const wrappedSetContextualButtonMenu = (current) => (list) => {
+    setButtonContextualMenu({
       fixed: current.fixed,
       interchangeable: list,
     });
@@ -32,8 +32,12 @@ function Dashboard({ CurrentPanel, isLandscape, isPortrait }) {
   return (
     <ApiContextProvider isFetching={isFetching} setIsFetching={setIsFetching}>
       <ButtonMenuContextProvider
-        buttonList={buttonMenu.interchangeable.concat(buttonMenu.fixed)}
-        setButtonList={setButtonList(buttonMenu)}>
+        contextualButtonMenu={
+          contextualButtonMenu.interchangeable.concat(contextualButtonMenu.fixed)
+        }
+        setContextualButtonMenu={
+          wrappedSetContextualButtonMenu(contextualButtonMenu)
+        }>
         <div className="dashboard">
           <nav className="navbar navbar-expand-lg navbar-light sticky-top bg-primary flex-md-nowrap p-0 shadow">
             <div className="col-md-3 col-lg-2 mr-0 px-3 pt-2 pb-2">

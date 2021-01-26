@@ -3,7 +3,7 @@ import Loader from '../loader';
 import { ButtonMenuContext, ApiContext } from '../../context';
 
 function MobileButtonMenu({ isLandscape }) {
-  const { buttonList } = useContext(ButtonMenuContext);
+  const { contextualButtonMenu } = useContext(ButtonMenuContext);
   const { isFetching } = useContext(ApiContext);
   const className = isLandscape ? 'landscape-button-menu' : 'portrait-button-menu';
   const flex = isLandscape ? 'flex-column' : 'flex-row';
@@ -19,7 +19,7 @@ function MobileButtonMenu({ isLandscape }) {
               </button>
             </div>
           </li>
-        ) : buttonList.map(({ Icon, onClick, title }, index) => (
+        ) : contextualButtonMenu.map(({ Icon, onClick, title }, index) => (
           <li className="nav-item text-nowrap" key={index}>
             <div className="nav-link">
               <button

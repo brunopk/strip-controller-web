@@ -11,8 +11,8 @@ import { Input } from '../../form';
 
 function SectionParameters({
   id,
-  currentButtonList,
-  setCurrentButtonList,
+  currentButtonMenu,
+  setCurrentButtonMenu,
   showColorPickerModal,
   colors,
   isModal }) {
@@ -45,27 +45,27 @@ function SectionParameters({
   // Update contextual button menu
   useEffect(() => {
     if (!isModal) {
-      let newButtonList = null;
+      let newButtonMenu = null;
       // If any input changes -> add upload button
       if (editedInputs.length > 0) {
         // Prevents adding same button twice
-        if (currentButtonList.filter((x) => x.Icon === Icon.Upload).length === 0) {
-          newButtonList = [{
+        if (currentButtonMenu.filter((x) => x.Icon === Icon.Upload).length === 0) {
+          newButtonMenu = [{
             Icon: Icon.Upload,
             title: 'Send changes',
             onClick: () => {
               setEditedInputs([]);
               console.log('Send changes');
             }
-          }, ...currentButtonList];
+          }, ...currentButtonMenu];
         } else {
-          newButtonList = currentButtonList.slice();
+          newButtonMenu = currentButtonMenu.slice();
         }
       // If upload button was pressed -> all inputs are in unchanged state -> remove upload button
       } else {
-        newButtonList = currentButtonList.filter((x) => x.Icon !== Icon.Upload);
+        newButtonMenu = currentButtonMenu.filter((x) => x.Icon !== Icon.Upload);
       }
-      setCurrentButtonList(newButtonList);
+      setCurrentButtonMenu(newButtonMenu);
     }
   }, [editedInputs]);
 
@@ -131,8 +131,8 @@ function SectionParameters({
 }
 
 function Panel() {
-  const { setButtonList } = useContext(ButtonMenuContext);
-  const [currentButtonList, setCurrentButtonList] = useState([]);
+  const { setContextualButtonMenu } = useContext(ButtonMenuContext);
+  const [currentButtonMenu, setCurrentButtonMenu] = useState([]);
   const [validationFunction, setValidationFunction] = useState(() => () => true);
   // TODO: set this with result of sending request to API (probably it should be a string)
   const [apiError, setApiError] = useState(false);
@@ -163,17 +163,17 @@ function Panel() {
   };
 
   useEffect(() => {
-    const newButtonList = currentButtonList.slice();
-    if (newButtonList.filter((x) => x.Icon === Icon.Plus).length === 0) {
-      newButtonList.push({
+    const newButtonMenu = currentButtonMenu.slice();
+    if (newButtonMenu.filter((x) => x.Icon === Icon.Plus).length === 0) {
+      newButtonMenu.push({
         Icon: Icon.Plus,
         title: 'New section',
         onClick: () => $('#modalNewSection').modal(),
       });
     }
-    setCurrentButtonList(newButtonList);
-    setButtonList(newButtonList);
-  }, [currentButtonList.length]);
+    setCurrentButtonMenu(newButtonMenu);
+    setContextualButtonMenu(newButtonMenu);
+  }, [currentButtonMenu.length]);
 
   return (
     <>
@@ -216,8 +216,8 @@ function Panel() {
                   <Card id={`card${i}`} title={`Section ${i}`} key={i} expanded={currentSection === i}>
                     <SectionParameters
                       id={`section${i}`}
-                      currentButtonList={currentButtonList}
-                      setCurrentButtonList={setCurrentButtonList}
+                      currentButtonMenu={currentButtonMenu}
+                      setCurrentButtonMenu={setCurrentButtonMenu}
                       showColorPickerModal={() => showColorPickerModal()}
                       colors={colors} />
                   </Card>

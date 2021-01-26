@@ -3,12 +3,12 @@ import Loader from '../loader';
 import { ButtonMenuContext, ApiContext } from '../../context';
 
 function DesktopButtonMenu() {
-  const { buttonList } = useContext(ButtonMenuContext);
+  const { contextualButtonMenu } = useContext(ButtonMenuContext);
   const { isFetching } = useContext(ApiContext);
 
   return (
     <ul className="navbar-nav button-menu-lg flex-row">
-      { buttonList.map(({ Icon, onClick, title }, index) => (
+      { contextualButtonMenu.map(({ Icon, onClick, title }, index) => (
         <li className="nav-item text-nowrap" key={index}>
           <div className="nav-link">
             <button
