@@ -2,19 +2,25 @@
 import React, { useContext, useState } from 'react';
 import { FormContext } from '../../context';
 
+/**
+ * This component must be used in conjunction with FormContextProvider
+ */
 function Input({ type, id, value, onChange, onBlur, required, isInvalid, title }) {
-  const formContext = useContext(FormContext);
+  const { setLastEditedInput } = useContext(FormContext);
   const [currentValue, setCurrentValue] = useState(value);
   let className = 'form-control';
   const wrappedOnChange = (event) => {
-    formContext.setLastEditedInput(id);
     setCurrentValue(event.target.value);
-    onChange(event.target.value);
+    if (typeof onChange === 'function') {
+      onChange(event.target.value);
+    }
   };
-
-  if (typeof formContext === 'undefined') {
-    throw new Error('Input component must be placed inside FormContextProvider');
-  }
+  const wrappedOnBlur = (currentValue) => {
+    setLastEditedInput(id);
+    if (typeof onBlur === 'function') {
+      onBlur(currentValue);
+    }
+  };
 
   if (typeof id === 'undefined') {
     throw new Error('Input component must have an id');
@@ -43,7 +49,7 @@ function Input({ type, id, value, onChange, onBlur, required, isInvalid, title }
       value={currentValue}
       title={title}
       onChange={(event) => wrappedOnChange(event)}
-      onBlur={() => onBlur(currentValue)}
+      onBlur={() => wrappedOnBlur(currentValue)}
       required={required} />
   );
 }
