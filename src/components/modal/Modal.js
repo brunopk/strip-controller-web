@@ -4,6 +4,9 @@ import { Danger } from '../alert';
 import $ from 'jquery';
 import './Modal.css';
 
+// TODO: <form> should be replaced by <Form>
+// TODO: update Form component with <input type="submit" />
+
 function ModalBody({ children, formId }) {
   const { apiError } = useContext(FormContext);
   return (
@@ -66,6 +69,7 @@ function ModalContent({ children, modalId, primaryBtn, secondaryBtn }) {
   const [apiError, setApiError] = useState(false);
   const formId = `form${modalId}`;
 
+  // TODO: this should be in FormContextProvider
   const wrappedSetValidationFunction = (func) => {
     // eslint-disable-next-line no-shadow
     const validationFunction = () => () => {
