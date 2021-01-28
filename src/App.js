@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { withOrientationChange } from 'react-device-detect';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import { UserContextProvider } from './context/UserContext';
+import { ApiContextProvider } from './context';
 import PColors from './components/panels/colors/PColors';
 import PCustomization from './components/panels/customization/PCustomization';
 import PEffects from './components/panels/effects/PEffects';
@@ -15,8 +15,14 @@ import './App.css';
 function App() {
   // eslint-disable-next-line no-shadow
   const DashboardWithOrentation = withOrientationChange(Dashboard);
+  const [isFetching, setIsFetching] = useState(false);
+  const [token, setToken] = useState(null);
   return (
-    <UserContextProvider>
+    <ApiContextProvider
+      isFetching={isFetching}
+      token={token}
+      setIsFetching={setIsFetching}
+      setToken={setToken}>
       <Switch>
         <Route path="/login">
           <Login />
@@ -51,7 +57,7 @@ function App() {
           <Redirect to={{ pathname: '/dashboard' }} />
         </Route>
       </Switch>
-    </UserContextProvider>
+    </ApiContextProvider>
   );
 }
 

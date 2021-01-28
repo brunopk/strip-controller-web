@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import { UserContext } from '../../context/UserContext';
+import { ApiContext } from '../../context';
 
 /**
  * Check authentication and redirect
@@ -10,7 +10,6 @@ import { UserContext } from '../../context/UserContext';
  * (see Redirect component on react-router-dom)
  */
 function checkAuthenticationAndRedirect(token, location, locationData) {
-  // console.log(token);
   // Every request should redirect to login in case of server returns a "Forbidden" error
   return token != null ? (location) : <Redirect to={{ pathname: '/login', state: { from: locationData } }} />;
 }
@@ -22,7 +21,7 @@ function checkAuthenticationAndRedirect(token, location, locationData) {
  * @param {*} param0
  */
 function PrivateRoute({ children, ...rest }) {
-  const { token } = useContext(UserContext);
+  const { token } = useContext(ApiContext);
   return (
     <Route
       {...rest}

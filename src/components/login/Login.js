@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
-import { UserContext } from '../../context/UserContext';
+import { ApiContext } from '../../context';
 import { setBodyClass, setRootClass } from '../../utils/css';
 import Logo from '../logo';
 import Loader from '../loader';
@@ -11,7 +11,7 @@ function Login() {
   const [isFetching] = useState(false);
   const [username, setUsername] = useState(null);
   const [password, setPassword] = useState(null);
-  const { setToken } = useContext(UserContext);
+  const { setToken } = useContext(ApiContext);
   const history = useHistory();
   const location = useLocation();
   const { from } = location.state || { from: { pathname: '' } };
