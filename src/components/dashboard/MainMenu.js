@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import * as Icon from 'react-feather';
 import PColors from '../panels/colors/PColors';
 import PCustomization from '../panels/customization/PCustomization';
@@ -10,25 +11,25 @@ function MainMenu({ id, currentPanel }) {
       <div className="sidebar-sticky pt-3 pb-3">
         <ul className="nav flex-column">
           <li className="nav-item">
-            <a className={`nav-link ${currentPanel === PColors ? 'active' : ''}`} href="/dash">
+            <Link className={`nav-link ${currentPanel === PColors ? 'active' : ''}`} to="/dash">
               <Icon.Grid className="feather" />
               Colors
               <span className="sr-only" />
-            </a>
+            </Link>
           </li>
           <li className="nav-item">
-            <a className={`nav-link ${currentPanel === PEffects ? 'active' : ''}`} href="/eff">
+            <Link className={`nav-link ${currentPanel === PEffects ? 'active' : ''}`} to="/effects">
               <Icon.Star className="feather" />
               Effects
               <span className="sr-only" />
-            </a>
+            </Link>
           </li>
           <li className="nav-item">
-            <a className={`nav-link ${currentPanel === PCustomization ? 'active' : ''}`} href="/customizable">
+            <Link className={`nav-link ${currentPanel === PCustomization ? 'active' : ''}`} to="/customizable">
               <Icon.Sliders className="feather" />
               Customization
               <span className="sr-only" />
-            </a>
+            </Link>
           </li>
           <li className="nav-item">
             <a className="nav-link " href="/logout">
