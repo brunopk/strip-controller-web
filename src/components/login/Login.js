@@ -4,38 +4,30 @@ import { ApiContext } from '../../context';
 import { setBodyClass, setRootClass } from '../../utils/css';
 import Logo from '../logo';
 import Loader from '../loader';
-import $ from 'jquery';
 import './Login.css';
 
 function Login() {
   const [isFetching] = useState(false);
-  const [username, setUsername] = useState(null);
-  const [password, setPassword] = useState(null);
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const { setToken } = useContext(ApiContext);
   const history = useHistory();
   const location = useLocation();
   const { from } = location.state || { from: { pathname: '' } };
   const login = async () => {
-    const form = $('#form-login');
-    if (!form[0].checkValidity()) {
-      // If the form is invalid, submit it. The form won't actually submit;
-      // this will just cause the browser to display the native HTML5 error messages.
-      form.find(':submit').trigger('click');
-    } else {
-      try {
-        // const resp = await getToken();
-        // if (resp.ok) {
-        // const body = await resp.json()
-        setToken('asds');
-        // Redirect
-        history.replace(from);
-        // } else {
-        // TODO
-        // }
-      } catch (error) {
-        // TODO
-        console.log(error);
-      }
+    try {
+      // const resp = await getToken();
+      // if (resp.ok) {
+      // const body = await resp.json()
+      setToken('asds');
+      // Redirect
+      history.replace(from);
+      // } else {
+      // TODO
+      // }
+    } catch (error) {
+      // TODO
+      console.log(error);
     }
   };
 
@@ -49,7 +41,7 @@ function Login() {
   return isFetching ? (
     <Loader />
   ) : (
-    <form id="form-login">
+    <form id="form-login" onSubmit={login}>
       <div className="form-signin">
         <img className="mb-4" src="/logo72.png" alt="" width="72" height="72" />
         <Logo />
@@ -70,8 +62,7 @@ function Login() {
           placeholder="Password"
           onChange={(event) => setPassword(event.target.value)}
           required />
-        <button className="btn btn-lg btn-primary btn-block" onClick={login}>Sign in</button>
-        <input type="submit" />
+        <button type="submit" className="btn btn-lg btn-primary btn-block">Sign in</button>
       </div>
     </form>
   );
