@@ -181,6 +181,10 @@
   width: 100%;
 }
 
+.portrait-button-menu .nav-link{
+  padding: .5rem .5rem;
+}
+
 .portrait-button-menu ul {
   justify-content: center;
 }
@@ -189,6 +193,10 @@
   position: fixed;
   top: 30%;
   left: 0;
+}
+
+.landscape-button-menu .nav-link{
+  padding: 5rem 0.5rem;
 }
 
 .landscape-button-menu ul {
