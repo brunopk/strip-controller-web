@@ -2,11 +2,13 @@ import React, { useContext, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import { ApiContext } from '../../context';
 import { setBodyClass, setRootClass } from '../../utils/css';
+import { Danger } from '../alert';
 import Logo from '../logo';
 import Loader from '../loader';
 import './Login.css';
 
 function Login() {
+  const [isError] = useState(false);
   const [isFetching] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -45,6 +47,9 @@ function Login() {
       <div className="form-signin">
         <img className="mb-4" src="/logo72.png" alt="" width="72" height="72" />
         <Logo />
+        <Danger className={`${isError ? 'visible' : 'invisible'}`}>
+          Error
+        </Danger>
         <label htmlFor="inputEmail" className="sr-only">Username</label>
         <input
           id="inputEmail"
