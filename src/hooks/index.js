@@ -1,3 +1,3 @@
-import {useLogin} from "./UseLogin.js"
+import useFetchService from './UseFetchService';
 
-export {useLogin}
+export default useFetchService;

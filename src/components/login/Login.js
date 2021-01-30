@@ -1,37 +1,45 @@
-import React, { useContext, useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import { ApiContext } from '../../context';
+import { ApiError, getToken } from '../../api';
 import { setBodyClass, setRootClass } from '../../utils/css';
 import { Danger } from '../alert';
+import useFetchService from '../../hooks';
 import Logo from '../logo';
 import Loader from '../loader';
 import './Login.css';
 
 function Login() {
-  const [isError] = useState(false);
-  const [isFetching] = useState(false);
+  const [isFetching, isError, loginResult, login, loginReset] = useFetchService(getToken);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const { setToken } = useContext(ApiContext);
   const history = useHistory();
   const location = useLocation();
   const { from } = location.state || { from: { pathname: '' } };
-  const login = async () => {
-    try {
-      // const resp = await getToken();
-      // if (resp.ok) {
-      // const body = await resp.json()
-      setToken('asds');
-      // Redirect
-      history.replace(from);
-      // } else {
-      // TODO
-      // }
-    } catch (error) {
-      // TODO
-      console.log(error);
-    }
+
+  // eslint-disable-next-line no-shadow
+  const onSubmit = (event, username, password) => {
+    event.preventDefault();
+    login({ username, password });
   };
+  // eslint-disable-next-line no-shadow
+  const onChangeUsername = (username) => {
+    loginReset();
+    setUsername(username);
+  };
+  // eslint-disable-next-line no-shadow
+  const onChangePassword = (password) => {
+    loginReset();
+    setPassword(password);
+  };
+
+  useEffect(() => {
+    if (!isError && loginResult !== null) {
+      setToken(loginResult.token);
+      history.replace(from);
+    }
+  }, [isError, loginResult]);
 
   setBodyClass('text-center');
   if (isFetching) {
@@ -43,12 +51,13 @@ function Login() {
   return isFetching ? (
     <Loader />
   ) : (
-    <form id="form-login" onSubmit={login}>
+    <form id="form-login" onSubmit={(event) => onSubmit(event, username, password)}>
       <div className="form-signin">
         <img className="mb-4" src="/logo72.png" alt="" width="72" height="72" />
         <Logo />
         <Danger className={`${isError ? 'visible' : 'invisible'}`}>
-          Error
+          {loginResult !== null && loginResult instanceof ApiError ? loginResult.httpStatusText : ''}
+          {loginResult !== null && !(loginResult instanceof ApiError) ? 'Error, see browser console' : ''}
         </Danger>
         <label htmlFor="inputEmail" className="sr-only">Username</label>
         <input
@@ -56,7 +65,7 @@ function Login() {
           className="form-control"
           placeholder="Username"
           value={username}
-          onChange={(event) => setUsername(event.target.value)}
+          onChange={(event) => onChangeUsername(event.target.value)}
           required />
         <label htmlFor="inputPassword" className="sr-only">Password</label>
         <input
@@ -65,7 +74,7 @@ function Login() {
           className="form-control"
           value={password}
           placeholder="Password"
-          onChange={(event) => setPassword(event.target.value)}
+          onChange={(event) => onChangePassword(event.target.value)}
           required />
         <button type="submit" className="btn btn-lg btn-primary btn-block">Sign in</button>
       </div>
