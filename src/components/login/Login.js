@@ -10,6 +10,7 @@ import Loader from '../loader';
 import './Login.css';
 
 function Login() {
+  // TODO: show error messages not directly from API (map error codes to strings)
   const [isFetching, isError, loginResult, login, loginReset] = useFetchService(getToken);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
