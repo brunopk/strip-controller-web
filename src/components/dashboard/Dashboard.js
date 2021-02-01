@@ -54,11 +54,11 @@ function Dashboard({ CurrentPanel, isLandscape, isPortrait }) {
           <input className="form-control form-control-dark w-100 bg-primary" type="text" readOnly />
           {/* controlled with */}
           <DesktopButtonMenu />
-          <MainMenu id="main-menu-sm" currentPanel={CurrentPanel} />
+          <MainMenu id="main-menu-sm" currentPanel={CurrentPanel} isLandscape={isLandscape} />
         </nav>
         <div className="container-fluid">
           <div className="row">
-            <MainMenu id="main-menu-lg" currentPanel={CurrentPanel} />
+            <MainMenu id="main-menu-lg" currentPanel={CurrentPanel} isLandscape={isLandscape} />
             <main role="main" className="col-md-9 ml-sm-auto col-lg-10 px-md-4 h-100">
               {/* TODO color list should come from server TODO implement onChose */}
               <CurrentPanel values={[]} editable onChose={(hex) => console.log(hex)} />

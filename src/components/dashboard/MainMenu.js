@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { isMobile } from 'react-device-detect';
 import * as Icon from 'react-feather';
 import $ from 'jquery';
 import PColors from '../panels/colors/PColors';
@@ -9,7 +10,7 @@ import PEffects from '../panels/effects/PEffects';
 function MainMenu({ id, currentPanel }) {
   const collapseMenu = () => $('.navbar-toggler').trigger('click');
   return (
-    <nav id={id} className="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+    <nav id={id} className={`${isMobile ? 'col-md-12' : ''} d-md-block bg-light sidebar collapse`}>
       <div className="sidebar-sticky pt-3 pb-3">
         <ul className="nav flex-column">
           <li className="nav-item">
