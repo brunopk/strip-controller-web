@@ -11,8 +11,8 @@ function MainMenu({ id, currentPanel }) {
   const collapseMenu = () => $('.navbar-toggler').trigger('click');
   return (
     <nav id={id} className={`${isMobile ? 'col-md-12' : ''} d-md-block bg-light sidebar collapse`}>
-      <div className="sidebar-sticky pt-3 pb-3">
-        <ul className="nav flex-column">
+      <div className="pt-5">
+        <ul className="nav flex-column pt-2">
           <li className="nav-item">
             <Link
               className={`nav-link ${currentPanel === PColors ? 'active' : ''}`}
