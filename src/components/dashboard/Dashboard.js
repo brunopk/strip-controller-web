@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import 'rc-color-picker/assets/index.css';
 import './Dashboard.css';
 import * as Icon from 'react-feather';
-import Logo from '../logo';
 import MainMenu from './MainMenu';
 import DesktopButtonMenu from './DesktopButtonMenu';
 import MobileButtonMenu from './MobileButtonMenu';
@@ -38,9 +37,6 @@ function Dashboard({ CurrentPanel, isLandscape, isPortrait }) {
       }>
       <div className="dashboard">
         <nav className="navbar navbar-expand-lg navbar-light sticky-top bg-primary flex-md-nowrap p-0 shadow">
-          <div className="col-md-3 col-lg-2 mr-0 px-3 pt-2 pb-2">
-            <Logo />
-          </div>
           <button
             className="navbar-toggler position-absolute d-md-none collapsed hidden-md-up"
             type="button"
@@ -49,7 +45,7 @@ function Dashboard({ CurrentPanel, isLandscape, isPortrait }) {
             aria-controls="main-menu-sm"
             aria-expanded="false"
             aria-label="Toggle navigation">
-            <span className="navbar-toggler-icon" />
+            <Icon.Menu className="color-white" />
           </button>
           <input className="form-control form-control-dark w-100 bg-primary" type="text" readOnly />
           {/* controlled with */}
