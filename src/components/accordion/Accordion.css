@@ -3,3 +3,11 @@
       padding: 0!important;
   }
 }
+
+.card-header-buttons svg, .card-header-buttons label {
+  margin-left: 2rem;
+}
+
+.card-header-buttons label {
+  margin-bottom: 0;
+}
