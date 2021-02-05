@@ -1,5 +1,6 @@
 import React, { useEffect, useContext, useState } from 'react';
 import './PCustomization.css';
+import '../../../css/colors.css';
 import * as Icon from 'react-feather';
 import $ from 'jquery';
 import Modal from '../../modal';
@@ -46,7 +47,8 @@ function SectionParameters({
   useEffect(() => {
     if (!isModal) {
       let newButtonMenu = null;
-      // If any input changes -> add upload button
+      // If any input changes
+      // -> add upload button
       if (editedInputs.length > 0) {
         // Prevents adding same button twice
         if (currentButtonMenu.filter((x) => x.Icon === Icon.Upload).length === 0) {
@@ -61,7 +63,10 @@ function SectionParameters({
         } else {
           newButtonMenu = currentButtonMenu.slice();
         }
-      // If upload button was pressed -> all inputs are in unchanged state -> remove upload button
+      // If editedInputs === []
+      // -> upload button was pressed
+      // -> all inputs are in unchanged state
+      // -> remove upload button
       } else {
         newButtonMenu = currentButtonMenu.filter((x) => x.Icon !== Icon.Upload);
       }
@@ -71,7 +76,7 @@ function SectionParameters({
 
   return (
     <div className="container-fluid">
-      <div className="row row-with-margin-top align-items-center">
+      <div className="row mt-3 align-items-center">
         <div className="col col-4">
           <span>Start:</span>
         </div>
@@ -86,7 +91,7 @@ function SectionParameters({
             required />
         </div>
       </div>
-      <div className="row row-with-margin-top align-items-center">
+      <div className="row mt-3 align-items-center">
         <div className="col col-4">
           <span>End:</span>
         </div>
@@ -101,7 +106,7 @@ function SectionParameters({
             required />
         </div>
       </div>
-      <div className="row row-with-margin-top align-items-center">
+      <div className="row mt-3 align-items-center">
         <div className="col col-4">
           <span>Color:</span>
         </div>
@@ -126,6 +131,13 @@ function SectionParameters({
           </div>
         </div>
       </div>
+      {!isModal ? (
+        <div className="row mt-5 ">
+          <div className="col-12 justify-content-end align-items-center d-flex">
+            <Icon.Trash2 className="blue-bootstrap-link" height={24} />
+          </div>
+        </div>
+      ) : (<></>)}
     </div>
   );
 }
@@ -142,11 +154,13 @@ function Panel() {
   const [currentNewColor, setCurrentNewColor] = useState(null);
   const [colors, setColors] = useState([]);
   const [sections, setSections] = useState([]);
+  // TODO: call API in onToggle function
   // eslint-disable-next-line no-shadow
   const newSection = (sections) => {
     const l = sections.slice();
     const s = {
       i: sections.length === 0 ? 1 : sections.length + 1,
+      onToggle: (isOn) => console.log(isOn)
     };
     l.push(s);
     setCurrentSection(s.i);
@@ -212,8 +226,13 @@ function Panel() {
           <div className="row">
             <div className="col  col-12">
               <Accordion>
-                {sections.map(({ i }) => (
-                  <Card id={`card${i}`} title={`Section ${i}`} key={i} expanded={currentSection === i}>
+                {sections.map(({ i, onToggle }) => (
+                  <Card
+                    id={`card${i}`}
+                    title={`Section ${i}`}
+                    key={i}
+                    expanded={currentSection === i}
+                    onToggle={onToggle}>
                     <SectionParameters
                       id={`section${i}`}
                       currentButtonMenu={currentButtonMenu}
