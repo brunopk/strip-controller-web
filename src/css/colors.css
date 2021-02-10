@@ -1,3 +1,20 @@
-.blue-bootstrap-link {
-  color: #007bff;
+.white {
+  color: white
+}
+
+.red-with-animation {
+  color: white;
+  animation:danger 1s;
+  -moz-animation:danger 1s infinite; /* Firefox */
+  -webkit-animation:danger 1s infinite; /* Safari and Chrome */
+}
+
+@keyframes danger {
+  0% {color: #ec7063;}
+  100% {color:white;}
+}
+
+
+.yellow {
+  color: yellow;
 }

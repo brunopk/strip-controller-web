@@ -1,5 +1,6 @@
 import { ButtonMenuContext, ButtonMenuContextProvider } from './ButtonMenuContext';
 import { ApiContext, ApiContextProvider } from './ApiContext';
+import { DeviceContext, DeviceContextProvider } from './DeviceContext';
 import { FormContext, FormContextProvider } from './FormContext';
 
 export {
@@ -8,5 +9,7 @@ export {
   ButtonMenuContext,
   ButtonMenuContextProvider,
   ApiContext,
-  ApiContextProvider
+  ApiContextProvider,
+  DeviceContext,
+  DeviceContextProvider
 };

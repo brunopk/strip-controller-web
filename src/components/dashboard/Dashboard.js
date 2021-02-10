@@ -11,32 +11,15 @@ import { ButtonMenuContextProvider } from '../../context';
 
 function Dashboard({ CurrentPanel, isLandscape, isPortrait }) {
   const history = useHistory();
-  const [contextualButtonMenu, setButtonContextualMenu] = useState({
-    interchangeable: typeof CurrentPanel.Buttons !== 'undefined' ? CurrentPanel.Buttons : [],
-    fixed: [{
-      Icon: Icon.RefreshCw,
-    }, {
-      Icon: Icon.Power,
-    }],
-  });
-  const wrappedSetContextualButtonMenu = (current) => (list) => {
-    setButtonContextualMenu({
-      fixed: current.fixed,
-      interchangeable: list,
-    });
-  };
+  const [contextualButtonMenu, setContextualButtonMenu] = useState([]);
 
   setRootClass('root-dashboard');
   setBodyClass('body-dashboard');
 
   return (
     <ButtonMenuContextProvider
-      contextualButtonMenu={
-        contextualButtonMenu.interchangeable.concat(contextualButtonMenu.fixed)
-      }
-      setContextualButtonMenu={
-        wrappedSetContextualButtonMenu(contextualButtonMenu)
-      }>
+      contextualButtonMenu={contextualButtonMenu}
+      setContextualButtonMenu={setContextualButtonMenu}>
       <div className="dashboard">
         <nav className="navbar navbar-expand-lg navbar-light sticky-top bg-primary flex-md-nowrap p-0 shadow">
           <div className="col-1 pt-2 pb-2">
