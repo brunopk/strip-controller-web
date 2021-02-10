@@ -7,6 +7,8 @@ import ApiError from './ApiError';
  * @returns {Promise<object>} result
  */
 async function sendRequest(url, method = 'GET', body = null) {
+  const address = localStorage.getItem('masterAddress');
+  const port = localStorage.getItem('masterPort');
   const fetchParams = body !== null ? {
     method,
     body: JSON.stringify({ ...body }),
@@ -15,7 +17,7 @@ async function sendRequest(url, method = 'GET', body = null) {
     },
   }
     : { method };
-  const resp = await fetch(url, fetchParams);
+  const resp = await fetch(url.replace('MASTER', `http://${address}:${port}`), fetchParams);
   if (resp.ok) {
     return resp.json();
   }

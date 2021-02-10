@@ -1,8 +1,6 @@
-const URL = 'http://localhost:8000';
-
 const API_ENDPOINTS = {
   GET_TOKEN: {
-    URL: `${URL}/token`,
+    URL: 'MASTER/token',
     METHOD: 'POST'
   }
 };

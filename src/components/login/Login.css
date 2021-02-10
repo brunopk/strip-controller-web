@@ -35,12 +35,15 @@
   border-bottom-left-radius: 0;
 }
 
-.form-signin input[type="password"] {
-  margin-bottom: 10px;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
+.form-signin input[type="email"] .form-signin input[type="password"]{
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
 }
 
 .form-signin input[type="submit"] {
   display: none!important;
+}
+
+#basic-addon1 {
+  font-size: x-small;
 }
