@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom';
 import { isMobile } from 'react-device-detect';
 import * as Icon from 'react-feather';
 import $ from 'jquery';
-import PColors from '../panels/colors/PColors';
-import PCustomization from '../panels/customization/PCustomization';
-import PEffects from '../panels/effects/PEffects';
+import PColors from '../../panels/colors/PColors';
+import PCustomization from '../../panels/customization/PCustomization';
+import PEffects from '../../panels/effects/PEffects';
 
 function MainMenu({ id, currentPanel }) {
   const collapseMenu = () => $('.navbar-toggler').trigger('click');

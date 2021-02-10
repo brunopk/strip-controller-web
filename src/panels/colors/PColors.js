@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './PColors.css';
-import { replaceAt } from '../../../utils/array';
+import { replaceAt } from '../../utils/array';
 import ColorPicker from 'rc-color-picker';
 import * as Icon from 'react-feather';
 

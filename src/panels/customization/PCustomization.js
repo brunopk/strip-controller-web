@@ -1,14 +1,14 @@
 import React, { useEffect, useContext, useState } from 'react';
 import './PCustomization.css';
-import '../../../css/colors.css';
+import '../../css/colors.css';
 import * as Icon from 'react-feather';
 import $ from 'jquery';
-import Modal from '../../modal';
+import Modal from '../../components/modal';
 import ColorPicker from 'rc-color-picker';
-import { Accordion, Card } from '../../accordion';
-import { Danger } from '../../alert';
-import { ButtonMenuContext, FormContext, FormContextProvider } from '../../../context';
-import { Input } from '../../form';
+import { Accordion, Card } from '../../components/accordion';
+import { Danger } from '../../components/alert';
+import { ButtonMenuContext, FormContext, FormContextProvider } from '../../context';
+import { Input } from '../../components/form';
 
 function SectionParameters({
   id,
