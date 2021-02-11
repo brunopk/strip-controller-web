@@ -10,8 +10,11 @@ import { Danger } from '../../components/alert';
 import { ButtonMenuContext, FormContext, FormContextProvider } from '../../context';
 import { Input } from '../../components/form';
 
+// TODO: validate inputs when uploading (pressing upload button )
+
 function SectionParameters({
   id,
+  cardId,
   currentButtonMenu,
   setCurrentButtonMenu,
   showColorPickerModal,
@@ -23,10 +26,19 @@ function SectionParameters({
     setValidationFunction,
     setApiError,
     setEditedInputs } = useContext(FormContext);
-  // TODO: this function should call API
-  const editSection = (value) => {
-    // TODO: set this with result of sending request to API
+    /* eslint-disable no-shadow */
+  const onBlurSectionInput = (id, editedInputs) => (value) => {
+    // TODO: update a Panel state variable to collect data of all sections
+    const input = editedInputs.filter((x) => x.id === id)[0];
+    // TODO: remove this
     setApiError('Replace this with the corresponding error message');
+    if (typeof input !== 'undefined') {
+      input.parentCardId = cardId;
+    } else {
+      const aux = editedInputs.slice();
+      aux.push({ id, cardId });
+      setEditedInputs(aux);
+    }
     console.log(value);
   };
 
@@ -57,7 +69,7 @@ function SectionParameters({
             title: 'Send changes',
             onClick: () => {
               setEditedInputs([]);
-              console.log('Send changes');
+              console.log('Send changes to API');
             }
           }, ...currentButtonMenu];
         } else {
@@ -86,8 +98,8 @@ function SectionParameters({
             type="number"
             value=""
             onChange={() => null}
-            onBlur={editSection}
-            isInvalid={apiError && editedInputs.filter((x) => `${id}Start` === x).length > 0}
+            onBlur={onBlurSectionInput(`${id}Start`, editedInputs)}
+            isInvalid={apiError && editedInputs.filter((x) => `${id}Start` === x.id).length > 0}
             required />
         </div>
       </div>
@@ -101,8 +113,8 @@ function SectionParameters({
             type="number"
             value=""
             onChange={() => null}
-            onBlur={editSection}
-            isInvalid={apiError && editedInputs.filter((x) => `${id}End` === x).length > 0}
+            onBlur={onBlurSectionInput(`${id}End`, editedInputs)}
+            isInvalid={apiError && editedInputs.filter((x) => `${id}End` === x.id).length > 0}
             required />
         </div>
       </div>
@@ -134,7 +146,7 @@ function SectionParameters({
       {!isModal ? (
         <div className="row mt-5 ">
           <div className="col-12 justify-content-end align-items-center d-flex">
-            <Icon.Trash2 className="blue-bootstrap-link" height={24} />
+            <Icon.Trash2 className="btn-link" height={24} />
           </div>
         </div>
       ) : (<></>)}
@@ -215,7 +227,7 @@ function Panel() {
         setEditedInputs={setEditedInputs}>
         <div className="container-fluid panel">
           {apiError ? (
-            <div className="row">
+            <div className="row mb-3">
               <div className="col col-12">
                 <Danger>
                   {apiError}
@@ -231,10 +243,12 @@ function Panel() {
                     id={`card${i}`}
                     title={`Section ${i}`}
                     key={i}
+                    isError={apiError && editedInputs.filter((x) => x.cardId === `card${i}`).length > 0}
                     expanded={currentSection === i}
                     onToggle={onToggle}>
                     <SectionParameters
                       id={`section${i}`}
+                      cardId={`card${i}`}
                       currentButtonMenu={currentButtonMenu}
                       setCurrentButtonMenu={setCurrentButtonMenu}
                       showColorPickerModal={() => showColorPickerModal()}
