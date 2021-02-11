@@ -17,9 +17,9 @@ function Input({ type, id, value, onChange, onBlur, required, isInvalid, title }
   };
   const wrappedOnBlur = (currentValue, editedInputs) => {
     editedInputs = editedInputs.slice();
-    setLastEditedInput(id);
-    if (editedInputs.filter((x) => x === id).length === 0) {
-      editedInputs.push(id);
+    setLastEditedInput({ id });
+    if (editedInputs.filter((x) => x.id === id).length === 0) {
+      editedInputs.push({ id });
       setEditedInputs(editedInputs);
     }
     if (typeof onBlur === 'function') {
