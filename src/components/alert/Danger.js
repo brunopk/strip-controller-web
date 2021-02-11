@@ -3,9 +3,9 @@ import React from 'react';
 /**
  * Wrapper for Bootstrap alert (see https://getbootstrap.com/docs/4.0/components/alerts/)
  */
-function Danger({ children, className }) {
+function Danger({ children }) {
   return (
-    <div className={`alert alert-danger ${className}`} role="alert">
+    <div className="alert alert-danger text-danger" role="alert">
       {children}
     </div>
   );
