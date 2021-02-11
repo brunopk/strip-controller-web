@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Switch from 'react-switch';
 
-function CardHeader({ id, title, dataTarget, ariaExpanded, onToggle }) {
+function CardHeader({ id, title, isError, dataTarget, ariaExpanded, onToggle }) {
   ariaExpanded = typeof ariaExpanded === 'boolean' && ariaExpanded;
   const [toggleValue, setToggleValue] = useState(false);
   const onToggleWrapper = (value) => {
@@ -11,13 +11,13 @@ function CardHeader({ id, title, dataTarget, ariaExpanded, onToggle }) {
   };
 
   return (
-    <div className="card-header" id={id}>
+    <div className={`card-header ${isError ? 'alert-danger' : ''}`} id={id}>
       <div className="container-fluid">
         <div className="row">
           <div className="col-6 text-left">
             <h5 className="mb-0">
               <button
-                className="btn btn-link"
+                className={`btn ${isError ? 'text-danger' : 'btn-link'}`}
                 data-toggle="collapse"
                 data-target={dataTarget}
                 aria-expanded={ariaExpanded}
@@ -34,6 +34,7 @@ function CardHeader({ id, title, dataTarget, ariaExpanded, onToggle }) {
                   height={24}
                   onChange={() => onToggleWrapper(toggleValue)}
                   checkedIcon={false}
+                  uncheckedIcon={false}
                   offColor="#6c757d"
                   onColor="#007bff"
                   checked={toggleValue} />
@@ -57,14 +58,16 @@ function CardBody({ children, id, dataParent, ariaLabelledBy, ariaExpanded }) {
   );
 }
 
-function Card({ children, id, title, expanded, onToggle }) {
+function Card({ children, id, isError, title, expanded, onToggle }) {
   onToggle = typeof onToggle === 'undefined' ? null : onToggle;
+  isError = typeof isError === 'undefined' ? false : isError;
 
   return (
     <div className="card">
       <CardHeader
         id={`heading${id}`}
         title={title}
+        isError={isError}
         dataTarget={`#${id}`}
         ariaExpanded={expanded}
         onToggle={onToggle} />
