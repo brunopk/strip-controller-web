@@ -12,6 +12,8 @@ function FormContextProvider({
   setLastEditedInput,
   setApiError,
   setEditedInputs }) {
+  // TODO: consider removing apiError and setApiError
+
   if (typeof editedInputs === 'undefined') {
     throw new Error('editedInputs is not defined');
   }
