@@ -1,10 +1,8 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
-import { ApiContext } from '../../context';
-import { ApiError, getToken } from '../../api';
+import React, { useState } from 'react';
+import { ApiError } from '../../api';
 import { setBodyClass, setRootClass } from '../../utils/css';
 import { Danger } from '../alert';
-import useFetchService from '../../hooks';
+import useLogin from '../../hooks/UseLogin';
 import Logo from '../logo';
 import Loader from '../loader';
 import * as Icon from 'react-feather';
@@ -12,15 +10,11 @@ import './Login.css';
 
 function Login() {
   // TODO: show error messages not directly from API (map error codes to strings)
-  const [isFetching, isError, loginResult, login, loginReset] = useFetchService(getToken);
+  const [isFetching, isError, loginResult, login, loginReset] = useLogin();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [masterAddress, setMasterAddress] = useState(localStorage.getItem('masterAddress'));
   const [masterPort, setMasterPort] = useState(localStorage.getItem('masterPort'));
-  const { setToken } = useContext(ApiContext);
-  const history = useHistory();
-  const location = useLocation();
-  const { from } = location.state || { from: { pathname: '' } };
 
   // eslint-disable-next-line no-shadow
   const onSubmit = (event, masterAddress, masterPort, username, password) => {
@@ -49,13 +43,6 @@ function Login() {
     loginReset();
     setPassword(password);
   };
-
-  useEffect(() => {
-    if (!isError && loginResult !== null) {
-      setToken(loginResult.token);
-      history.replace(from);
-    }
-  }, [isError, loginResult]);
 
   setBodyClass('text-center');
   if (isFetching) {

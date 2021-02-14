@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import { ApiContext } from '../../context';
+import { MainContext } from '../../context';
 
 /**
  * Check authentication and redirect
@@ -21,7 +21,7 @@ function checkAuthenticationAndRedirect(token, location, locationData) {
  * @param {*} param0
  */
 function PrivateRoute({ children, ...rest }) {
-  const { token } = useContext(ApiContext);
+  const { token } = useContext(MainContext);
   return (
     <Route
       {...rest}

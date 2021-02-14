@@ -7,7 +7,7 @@ import Modal from '../../components/modal';
 import ColorPicker from 'rc-color-picker';
 import { Accordion, Card } from '../../components/accordion';
 import { Danger } from '../../components/alert';
-import { ButtonMenuContext, FormContext, FormContextProvider } from '../../context';
+import { ButtonMenuContext, DashboardContext, FormContext, FormContextProvider } from '../../context';
 import { Input } from '../../components/form';
 
 // TODO: validate inputs when uploading (pressing upload button )
@@ -133,11 +133,15 @@ function SectionParameters({
               aria-expanded="false"
               aria-label="Select color" />
             <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              {colors.map((hex, index) => (
-                <div className="dropdown-item" key={index} style={{ backgroundColor: hex }}><br /></div>
+              {colors.map(({ hex }, index) => (
+                <div className="dropdown-item" key={index} style={{ backgroundColor: `#${hex}` }}>
+                  <br />
+                </div>
               ))}
               {typeof showColorPickerModal !== 'undefined' ? (
-                <div className="dropdown-item" onClick={() => showColorPickerModal()}>New color</div>
+                <div className="dropdown-item" onClick={() => showColorPickerModal()}>
+                  <Icon.Plus className="text-primary" />
+                </div>
               ) : (<></>)}
             </div>
           </div>
@@ -155,8 +159,8 @@ function SectionParameters({
 }
 
 function Panel() {
-  const { setContextualButtonMenu } = useContext(ButtonMenuContext);
-  const [currentButtonMenu, setCurrentButtonMenu] = useState([]);
+  const { contextualButtonMenu, setContextualButtonMenu } = useContext(ButtonMenuContext);
+  const { data, colors, setData, setColors } = useContext(DashboardContext);
   const [validationFunction, setValidationFunction] = useState(() => () => true);
   // TODO: set this with result of sending request to API (probably it should be a string)
   const [apiError, setApiError] = useState(false);
@@ -164,8 +168,8 @@ function Panel() {
   const [lastEditedInput, setLastEditedInput] = useState(null);
   const [currentSection, setCurrentSection] = useState(null);
   const [currentNewColor, setCurrentNewColor] = useState(null);
-  const [colors, setColors] = useState([]);
   const [sections, setSections] = useState([]);
+
   // TODO: call API in onToggle function
   // eslint-disable-next-line no-shadow
   const newSection = (sections) => {
@@ -188,18 +192,22 @@ function Panel() {
     $('#modalColorPicker').modal();
   };
 
+  console.log(data);
+
   useEffect(() => {
-    const newButtonMenu = currentButtonMenu.slice();
+    const newButtonMenu = contextualButtonMenu.slice();
     if (newButtonMenu.filter((x) => x.Icon === Icon.Plus).length === 0) {
       newButtonMenu.push({
         Icon: Icon.Plus,
         title: 'New section',
-        onClick: () => $('#modalNewSection').modal(),
+        onClick: () => {
+          $('#modalNewSection').modal();
+          setData('CUSTOMIZATION TEST');
+        },
       });
     }
-    setCurrentButtonMenu(newButtonMenu);
     setContextualButtonMenu(newButtonMenu);
-  }, [currentButtonMenu.length]);
+  }, [contextualButtonMenu.length]);
 
   return (
     <>
@@ -249,8 +257,8 @@ function Panel() {
                     <SectionParameters
                       id={`section${i}`}
                       cardId={`card${i}`}
-                      currentButtonMenu={currentButtonMenu}
-                      setCurrentButtonMenu={setCurrentButtonMenu}
+                      currentButtonMenu={contextualButtonMenu}
+                      setCurrentButtonMenu={setContextualButtonMenu}
                       showColorPickerModal={() => showColorPickerModal()}
                       colors={colors} />
                   </Card>

@@ -1,19 +1,18 @@
 import React, { useContext } from 'react';
 import '../../css/colors.css';
 import * as Icon from 'react-feather';
-import { ButtonMenuContext, ApiContext, DeviceContext } from '../../context';
+import { ButtonMenuContext, MainContext, DashboardContext } from '../../context';
 
 function DesktopButtonMenu() {
   const { contextualButtonMenu } = useContext(ButtonMenuContext);
-  const { isFetching } = useContext(ApiContext);
-  const { isError, isOn, setIsOn } = useContext(DeviceContext);
-  const apiFetching = isFetching;
-  const deviceError = isError;
-  const deviceIsOn = isOn;
+  const { fetching, data } = useContext(DashboardContext);
+  const { deviceError, deviceOn, setDeviceOn, setData } = useContext(MainContext);
   // eslint-disable-next-line no-shadow
-  const toggleOn = (deviceIsOn) => {
+  const toggleDeviceButton = (deviceOn) => {
+    // Prevent dashboard losing state "backuping" context
+    setData({ current: data });
+    setDeviceOn(!deviceOn);
     console.log('Call API');
-    setIsOn(!deviceIsOn);
   };
 
   return (
@@ -41,7 +40,7 @@ function DesktopButtonMenu() {
             {deviceError ? (
               <Icon.AlertTriangle size={18} className="red-with-animation" />
             ) : (
-              <Icon.Radio size={18} className={apiFetching ? 'yellow' : 'white'} />
+              <Icon.Radio size={18} className={fetching ? 'yellow' : 'white'} />
             )}
           </button>
         </div>
@@ -50,9 +49,9 @@ function DesktopButtonMenu() {
         <div className="nav-link">
           <button
             className="btn"
-            title={deviceIsOn ? 'Turn off ligths' : 'Turn on ligths'}
-            onClick={() => toggleOn(deviceIsOn)}>
-            <Icon.Power size={18} className={deviceIsOn ? 'white' : 'red-with-animation'} />
+            title={deviceOn ? 'Turn off ligths' : 'Turn on ligths'}
+            onClick={() => toggleDeviceButton(deviceOn)}>
+            <Icon.Power size={18} className={deviceOn ? 'white' : 'red-with-animation'} />
           </button>
         </div>
       </li>

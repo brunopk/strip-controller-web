@@ -1,5 +1,7 @@
 import { useReducer, useEffect, useContext } from 'react';
-import { MainContext, DashboardContext } from '../context';
+import { MainContext } from '../context';
+import { useHistory, useLocation } from 'react-router-dom';
+import { getToken } from '../api/Common';
 
 const A_FETCH_SET_PARAM = 'FETCH_SET_PARAM';
 const A_FETCH_INIT = 'FETCH_INIT';
@@ -13,21 +15,12 @@ const INITIAL_STATE = {
   result: null,
 };
 
-// TODO: add token refresh logic
+function useLogin() {
+  const { setToken } = useContext(MainContext);
+  const history = useHistory();
+  const location = useLocation();
+  const { from } = location.state || { from: { pathname: '' } };
 
-/**
- * Query an endpoint asynchronously
- * @param {Function} endpoint the endpoint that will be requested
- * @returns {Array} Returns an array with [isLoading, isError, result, fetch, reset]
- *
- *  - Initial values: [null, false, false, Function, Function]
- *  - fetch: (params) -> {} function to trigger the hook
- *  - reset: () -> null function to reset the hook in case of error (isError == true)
- *  - result: query result (in case of error, it will be the captured exception)
- */
-function useFetchService(endpoint) {
-  const { token } = useContext(MainContext);
-  const { setFetching } = useContext(DashboardContext);
   const [state, dispatch] = useReducer((prevState, action) => {
     switch (action.type) {
       case A_FETCH_SUCCESS:
@@ -64,18 +57,21 @@ function useFetchService(endpoint) {
     const fetchData = async () => {
       try {
         dispatch({ type: A_FETCH_INIT });
-        const res = await endpoint({ token, ...state.param });
+        const res = await getToken({ ...state.param });
         dispatch({ type: A_FETCH_SUCCESS, data: res });
       } catch (error) {
         console.error(error);
         dispatch({ type: A_FETCH_FAILURE, error });
       }
     };
-    if (state.param !== null) {
+    if (!state.isLoading && !state.isError && state.result == null && state.param !== null) {
       fetchData();
     }
-    setFetching(state.isLoading);
-  }, [state.param, state.isLoading, endpoint]);
+    if (!state.isError && state.result !== null) {
+      setToken(state.result);
+      history.replace(from);
+    }
+  }, [state.param, state.result, state.isError, state.isLoading]);
 
   return [
     state.isLoading,
@@ -86,4 +82,4 @@ function useFetchService(endpoint) {
   ];
 }
 
-export default useFetchService;
+export default useLogin;
