@@ -7,6 +7,10 @@ const menu = {
     path: '/customization',
     label: 'Customization'
   },
+  devices: {
+    path: '/devices',
+    label: 'Devices'
+  },
   logout: {
     path: '/logout',
     label: 'Exit'

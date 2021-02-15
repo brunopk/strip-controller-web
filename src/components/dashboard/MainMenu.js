@@ -45,6 +45,16 @@ function MainMenu({ id }) {
             </Link>
           </li>
           <li className="nav-item">
+            <Link
+              className={`nav-link ${active === menu.devices.path ? 'active' : ''}`}
+              to={menu.devices.path}
+              onClick={() => onClickLink(menu.devices.path)}>
+              <Icon.Cpu className="feather" />
+              {menu.devices.label}
+              <span className="sr-only" />
+            </Link>
+          </li>
+          <li className="nav-item">
             <a className="nav-link " href={menu.logout.path}>
               <Icon.LogOut className="feather" />
               {menu.logout.label}

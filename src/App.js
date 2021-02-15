@@ -4,6 +4,7 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import { MainContextProvider } from './context';
 import Customization from './components/dashboard/customization';
 import Effects from './components/dashboard/effects';
+import Devices from './components/dashboard/devices';
 import Login from './components/login';
 import Dashboard from './components/dashboard/Dashboard';
 import PrivateRoute from './components/private-route';
@@ -58,6 +59,11 @@ function App() {
         <PrivateRoute path={menu.customization.path}>
           <DashboardWithOrentation>
             <Customization />
+          </DashboardWithOrentation>
+        </PrivateRoute>
+        <PrivateRoute path={menu.devices.path}>
+          <DashboardWithOrentation>
+            <Devices />
           </DashboardWithOrentation>
         </PrivateRoute>
         <Route path="/">

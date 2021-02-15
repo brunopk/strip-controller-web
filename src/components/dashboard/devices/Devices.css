@@ -1,0 +1,23 @@
+.form-group-custom {
+  margin-bottom: 0!important;
+  height: 100%;
+}
+
+.dropdown .btn, .dropdown-menu {
+  width: 100%;
+}
+
+.dropdown .btn {
+  text-align: right;
+}
+
+.dropdown-item {
+  text-align: center!important;
+}
+
+.dropdown-item {
+  cursor: pointer;
+}
+
+
+
