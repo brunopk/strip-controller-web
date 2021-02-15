@@ -20,7 +20,7 @@ function ModalBody({ children, formId }) {
           </div>
         ) : (<></>)}
         <div className="row">
-          <form id={formId}>
+          <form id={formId} className="justify-content-center d-flex">
             {children}
             <input type="submit" />
           </form>
