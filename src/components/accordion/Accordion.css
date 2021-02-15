@@ -4,6 +4,10 @@
   }
 }
 
+.card-header h5 .btn {
+  font-size: .875rem!important;
+}
+
 .card-header-buttons svg, .card-header-buttons label {
   margin-left: 2rem;
 }
