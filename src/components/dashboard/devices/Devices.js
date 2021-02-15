@@ -5,6 +5,8 @@ import { Accordion, Card } from '../../accordion';
 import { Danger } from '../../alert';
 import { ButtonMenuContext, MainContext } from '../../../context';
 
+// TODO: Device name and led number should come from API
+
 function Devices() {
   const { setContextualButtonMenu } = useContext(ButtonMenuContext);
   const { deviceError } = useContext(MainContext);
