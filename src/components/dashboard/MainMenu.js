@@ -18,8 +18,6 @@ function MainMenu({ id }) {
     // Remove panel data on main context
   };
 
-  console.log(location.pathname);
-
   return (
     <nav id={id} className={`${isMobile ? 'col-md-12' : ''} d-md-block bg-light sidebar collapse`}>
       <div className={!isMobile ? 'pt-5' : ''}>
