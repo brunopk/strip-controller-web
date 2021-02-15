@@ -68,7 +68,7 @@ function useLogin() {
       fetchData();
     }
     if (!state.isError && state.result !== null) {
-      setToken(state.result);
+      setToken(state.result.token);
       history.replace(from);
     }
   }, [state.param, state.result, state.isError, state.isLoading]);
