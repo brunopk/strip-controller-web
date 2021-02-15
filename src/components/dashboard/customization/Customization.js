@@ -160,7 +160,7 @@ function SectionParameters({
 
 function Customization() {
   const { contextualButtonMenu, setContextualButtonMenu } = useContext(ButtonMenuContext);
-  const { data, colors, setData, setColors } = useContext(DashboardContext);
+  const { colors, setData, setColors } = useContext(DashboardContext);
   const [validationFunction, setValidationFunction] = useState(() => () => true);
   // TODO: set this with result of sending request to API (probably it should be a string)
   const [apiError, setApiError] = useState(false);
@@ -192,7 +192,7 @@ function Customization() {
     $('#modalColorPicker').modal();
   };
 
-  console.log(data);
+  console.log(colors);
 
   useEffect(() => {
     const newButtonMenu = contextualButtonMenu.slice();

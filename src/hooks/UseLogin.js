@@ -1,7 +1,7 @@
 import { useReducer, useEffect, useContext } from 'react';
 import { MainContext } from '../context';
 import { useHistory, useLocation } from 'react-router-dom';
-import { getToken } from '../api/Common';
+import { getToken } from '../api/common';
 
 const A_FETCH_SET_PARAM = 'FETCH_SET_PARAM';
 const A_FETCH_INIT = 'FETCH_INIT';

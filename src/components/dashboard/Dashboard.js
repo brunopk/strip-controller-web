@@ -1,26 +1,35 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import 'rc-color-picker/assets/index.css';
 import './Dashboard.css';
 import * as Icon from 'react-feather';
 import MainMenu from './MainMenu';
 import DesktopButtonMenu from './DesktopButtonMenu';
 import MobileButtonMenu from './MobileButtonMenu';
+import getColor from '../../api/resources/color';
 import { useHistory } from 'react-router-dom';
+import { useScheduledFetch } from '../../hooks';
 import { setBodyClass, setRootClass } from '../../utils/css';
 import { ButtonMenuContextProvider, DashboardContextProvider, MainContext } from '../../context';
 
 function Dashboard({ children, isLandscape, isPortrait }) {
   const history = useHistory();
+  const result1 = useScheduledFetch(getColor, 5);
   const mainContext = useContext(MainContext);
   const [contextualButtonMenu, setContextualButtonMenu] = useState([]);
   const [data, setData] = useState(typeof mainContext.data.current !== 'undefined' ? mainContext.data.current : null);
-  const [colors, setColors] = useState(typeof mainContext.data.colors !== 'undefined' ? mainContext.data.colors : []);
+  const [colors, setColors] = useState([]);
   const [fetching, setFetching] = useState(false);
 
   setRootClass('root-dashboard');
   setBodyClass('body-dashboard');
 
-  // TODO: periodically update color list
+  // Periodically update color list
+  useEffect(() => {
+    if (!result1.error && result1.data != null) {
+      setColors(result1.data);
+    }
+  }, [result1.error, result1.data]);
+
   // TODO: periodically check device status
 
   return (

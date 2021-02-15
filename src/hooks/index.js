@@ -1,3 +1,4 @@
 import useFetchService from './UseFetchService';
+import useScheduledFetch from './UseScheduledFetch';
 
-export default useFetchService;
+export { useFetchService, useScheduledFetch };
