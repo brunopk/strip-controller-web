@@ -1,0 +1,41 @@
+.form-group-custom {
+  margin-bottom: 0!important;
+  height: 100%;
+}
+
+.dropdown .btn, .dropdown-menu {
+  width: 100%;
+}
+
+.dropdown .btn {
+  text-align: right;
+}
+
+.dropdown-menu {
+  padding: 0!important;
+  height: auto;
+  max-height: 8rem;
+  overflow-x: hidden;
+}
+
+.dropdown-item {
+  text-align: center!important;
+}
+
+.dropdown-item {
+  cursor: pointer;
+}
+
+.loader-container {
+  margin-top: 20rem;
+  margin-left: -10rem;
+}
+
+@media (max-width: 768px) {
+  .loader-container {
+    margin-top: 12rem;
+    margin-left: auto;
+  }
+}
+
+

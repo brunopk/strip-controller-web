@@ -1,8 +1,8 @@
 import React from 'react';
-import './PEffects.css';
+import './Effects.css';
 import * as Icon from 'react-feather';
 
-function Panel() {
+function Effects() {
   const array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
   return (
     <div className="container-fluid panel">
@@ -33,4 +33,4 @@ function Panel() {
   );
 }
 
-export default Panel;
+export default Effects;

@@ -1,14 +1,14 @@
 import React, { useEffect, useContext, useState } from 'react';
-import './PCustomization.css';
-import '../../css/colors.css';
+import './Customization.css';
+import '../../../css/colors.css';
 import * as Icon from 'react-feather';
 import $ from 'jquery';
-import Modal from '../../components/modal';
+import Modal from '../../modal';
 import ColorPicker from 'rc-color-picker';
-import { Accordion, Card } from '../../components/accordion';
-import { Danger } from '../../components/alert';
-import { ButtonMenuContext, DashboardContext, FormContext, FormContextProvider } from '../../context';
-import { Input } from '../../components/form';
+import { Accordion, Card } from '../../accordion';
+import { Danger } from '../../alert';
+import { ButtonMenuContext, DashboardContext, FormContext, FormContextProvider } from '../../../context';
+import { Input } from '../../form';
 
 // TODO: validate inputs when uploading (pressing upload button )
 
@@ -158,7 +158,7 @@ function SectionParameters({
   );
 }
 
-function Panel() {
+function Customization() {
   const { contextualButtonMenu, setContextualButtonMenu } = useContext(ButtonMenuContext);
   const { data, colors, setData, setColors } = useContext(DashboardContext);
   const [validationFunction, setValidationFunction] = useState(() => () => true);
@@ -272,4 +272,4 @@ function Panel() {
   );
 }
 
-export default Panel;
+export default Customization;

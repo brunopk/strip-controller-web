@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { withOrientationChange } from 'react-device-detect';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { MainContextProvider } from './context';
-import PCustomization from './panels/customization/PCustomization';
-import PEffects from './panels/effects/PEffects';
+import Customization from './components/dashboard/customization';
+import Effects from './components/dashboard/effects';
 import Login from './components/login';
 import Dashboard from './components/dashboard/Dashboard';
 import PrivateRoute from './components/private-route';
@@ -52,12 +52,12 @@ function App() {
       why we put this one last of all */}
         <PrivateRoute path={menu.effects.path}>
           <DashboardWithOrentation>
-            <PEffects />
+            <Effects />
           </DashboardWithOrentation>
         </PrivateRoute>
         <PrivateRoute path={menu.customization.path}>
           <DashboardWithOrentation>
-            <PCustomization />
+            <Customization />
           </DashboardWithOrentation>
         </PrivateRoute>
         <Route path="/">
