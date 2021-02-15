@@ -6,6 +6,7 @@ import MainMenu from './MainMenu';
 import DesktopButtonMenu from './DesktopButtonMenu';
 import MobileButtonMenu from './MobileButtonMenu';
 import getColor from '../../api/resources/color';
+import { cmdScrpiStatus } from '../../api/commands/scrpi';
 import { useHistory } from 'react-router-dom';
 import { useScheduledFetch } from '../../hooks';
 import { setBodyClass, setRootClass } from '../../utils/css';
@@ -13,7 +14,8 @@ import { ButtonMenuContextProvider, DashboardContextProvider, MainContext } from
 
 function Dashboard({ children, isLandscape, isPortrait }) {
   const history = useHistory();
-  const result1 = useScheduledFetch(getColor, 5);
+  const result1 = useScheduledFetch(getColor, 10);
+  const result2 = useScheduledFetch(cmdScrpiStatus, 3);
   const mainContext = useContext(MainContext);
   const [contextualButtonMenu, setContextualButtonMenu] = useState([]);
   const [data, setData] = useState(typeof mainContext.data.current !== 'undefined' ? mainContext.data.current : null);
@@ -30,7 +32,22 @@ function Dashboard({ children, isLandscape, isPortrait }) {
     }
   }, [result1.error, result1.data]);
 
-  // TODO: periodically check device status
+  // Periodically check device status
+  useEffect(() => {
+    if (!result1.error && result1.data != null) {
+      // Prevent dashboard losing state
+      mainContext.setData({
+        ...mainContext.data,
+        current: data,
+      });
+      // Update device status icon
+      if (result2.data.is_error) {
+        mainContext.setDeviceError(result2.data.last_exception);
+      } else {
+        mainContext.setDeviceError(false);
+      }
+    }
+  }, [result2.error, result2.data]);
 
   return (
     <DashboardContextProvider

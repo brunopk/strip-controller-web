@@ -6,6 +6,14 @@ const API_ENDPOINTS = {
   GET_COLOR: {
     URL: 'MASTER/resources/color',
     METHOD: 'GET'
+  },
+  CMD_SCRPI_STATUS: {
+    URL: 'MASTER/commands/scrpi/status',
+    METHOD: 'PATCH'
+  },
+  CMD_SCRPI_CONNECT: {
+    URL: 'MASTER/commands/scrpi/connect',
+    METHOD: 'PATCH'
   }
 };
 
