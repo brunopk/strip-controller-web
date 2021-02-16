@@ -5,6 +5,7 @@ import * as Icon from 'react-feather';
 import $ from 'jquery';
 import Modal from '../../modal';
 import ColorPicker from 'rc-color-picker';
+import { useModalToggle } from '../../../hooks';
 import { Accordion, Card } from '../../accordion';
 import { Danger } from '../../alert';
 import { ButtonMenuContext, DashboardContext, FormContext, FormContextProvider } from '../../../context';
@@ -160,7 +161,8 @@ function SectionParameters({
 
 function Customization() {
   const { contextualButtonMenu, setContextualButtonMenu } = useContext(ButtonMenuContext);
-  const { data, colors, setData, setColors } = useContext(DashboardContext);
+  const { data, colors, setColors } = useContext(DashboardContext);
+  const [showModal, hideModal] = useModalToggle();
   const [validationFunction, setValidationFunction] = useState(() => () => true);
   // TODO: set this with result of sending request to API (probably it should be a string)
   const [apiError, setApiError] = useState(false);
@@ -192,30 +194,25 @@ function Customization() {
     $('#modalColorPicker').modal();
   };
 
-  console.log(data);
-
   useEffect(() => {
     const newButtonMenu = contextualButtonMenu.slice();
     if (newButtonMenu.filter((x) => x.Icon === Icon.Plus).length === 0) {
       newButtonMenu.push({
         Icon: Icon.Plus,
         title: 'New section',
-        onClick: () => {
-          $('#modalNewSection').modal();
-          setData('CUSTOMIZATION TEST');
-        },
+        onClick: () => showModal('sectionDefinition'),
       });
     }
     setContextualButtonMenu(newButtonMenu);
-  }, [contextualButtonMenu.length]);
+  }, [contextualButtonMenu.length, data]);
 
   return (
     <>
       <Modal
-        id="modalNewSection"
+        id="sectionDefinition"
         primaryBtn={{ text: 'OK', onClick: () => newSection(sections) }}
-        secondaryBtn={{ text: 'CANCEL', onClick: () => null, dataDismiss: 'modal' }}>
-        <SectionParameters id="newSection" colors={colors} isModal />
+        secondaryBtn={{ text: 'CANCEL', onClick: () => hideModal('sectionDefinition') }}>
+        <SectionParameters id="sectionDefinition" colors={colors} isModal />
       </Modal>
       <Modal
         id="modalColorPicker"

@@ -15,11 +15,12 @@ import { ButtonMenuContextProvider, DashboardContextProvider, MainContext } from
 function Dashboard({ children, isLandscape, isPortrait }) {
   const history = useHistory();
   const result1 = useScheduledFetch(getColor, 10);
-  const result2 = useScheduledFetch(cmdScrpiStatus, 3);
+  const result2 = useScheduledFetch(cmdScrpiStatus, 5);
   const mainContext = useContext(MainContext);
   const [contextualButtonMenu, setContextualButtonMenu] = useState([]);
   const [data, setData] = useState(typeof mainContext.data.current !== 'undefined' ? mainContext.data.current : null);
   const [colors, setColors] = useState([]);
+  const [modalVisible, setModalVisible] = useState(false);
   const [fetching, setFetching] = useState(false);
 
   setRootClass('root-dashboard');
@@ -27,36 +28,42 @@ function Dashboard({ children, isLandscape, isPortrait }) {
 
   // Periodically update color list
   useEffect(() => {
-    if (!result1.error && result1.data != null) {
-      setColors(result1.data);
+    if (!modalVisible) {
+      if (!result1.error && result1.data != null) {
+        setColors(result1.data);
+      }
     }
-  }, [result1.error, result1.data]);
+  }, [result1.error, result1.data, modalVisible]);
 
   // Periodically check device status
   useEffect(() => {
-    if (!result1.error && result1.data != null) {
-      // Prevent dashboard losing state
-      mainContext.setData({
-        ...mainContext.data,
-        current: data,
-      });
-      // Update device status icon
-      if (result2.data.is_error) {
-        mainContext.setDeviceError(result2.data.last_exception);
-      } else {
-        mainContext.setDeviceError(false);
+    if (!modalVisible) {
+      if (!result1.error && result1.data != null) {
+        // Prevent dashboard losing state
+        mainContext.setData({
+          ...mainContext.data,
+          current: data,
+        });
+        // Update device status icon
+        if (result2.data.is_error) {
+          mainContext.setDeviceError(result2.data.last_exception);
+        } else {
+          mainContext.setDeviceError(false);
+        }
       }
     }
-  }, [result2.error, result2.data]);
+  }, [result2.error, result2.data, modalVisible]);
 
   return (
     <DashboardContextProvider
       data={data}
       colors={colors}
       fetching={fetching}
+      modalVisible={modalVisible}
       setData={setData}
       setColors={setColors}
-      setFetching={setFetching}>
+      setFetching={setFetching}
+      setModalVisible={setModalVisible}>
       <ButtonMenuContextProvider
         contextualButtonMenu={contextualButtonMenu}
         setContextualButtonMenu={setContextualButtonMenu}>

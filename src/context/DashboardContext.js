@@ -7,12 +7,22 @@ function DashboardContextProvider({
   data,
   colors,
   fetching,
+  modalVisible,
   setData,
   setFetching,
-  setColors
+  setColors,
+  setModalVisible
 }) {
   return (
-    <DashboardContext.Provider value={{ data, colors, fetching, setData, setFetching, setColors }}>
+    <DashboardContext.Provider value={{
+      data,
+      colors,
+      fetching,
+      modalVisible,
+      setData,
+      setFetching,
+      setColors,
+      setModalVisible }}>
       {children}
     </DashboardContext.Provider>
   );
